@@ -1,5 +1,6 @@
 class Cell(object):
     # walls är string (t.ex. '0000') pga 0000 = 0
+    # g = avstånd från start, h = avstånd till mål
     def __init__(self, walls, coordinateX, coordinateY):
         self.walls = walls
         self._visited = False
