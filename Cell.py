@@ -38,7 +38,7 @@ class Cell(object):
     def h(self):
         return self._h
 
-    @g.setter
+    @h.setter
     def h(self, value):
         self._h = value
 
