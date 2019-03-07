@@ -1,31 +1,28 @@
 # Här kan vi lägga algoritmen och saker relaterade till den
 import Maze
+import Cell
 
 
-class HelpFunctions:
+class Pathfinder:
 
-    def currentCell(self, maze):
-        return maze.x, maze.y
+    def calc_g(self, maze, x, y):
+        cell = maze[x][y]
+        cell.g = abs(x - maze.start_x) + abs(y - maze.start_y)   # tror detta stämmer?
 
-    # lastDirection är sträng (NSWE), t.ex. N
-    def updateCurrentCell(self, maze, lastDirection):
-        if lastDirection == 'N':
-            maze.y = maze.y + 1
-        elif lastDirection == 'S':
-            maze.y = maze.y - 1
-        elif lastDirection == 'W':
-            maze.x = maze.x - 1
-        elif lastDirection == 'E':
-            maze.x = maze.x + 1
-        else:
-            None
+    # manhattan heuristic (första vektornorm)
+    def calc_h(self, maze, x ,y):
+        cell = maze[x][y]
+        cell.h = abs(maze.end_x - x) + abs(maze.end_y - y)
 
+    def calc_f(self, maze, x, y):
+        cell = maze[x][y]
+        cell.f = cell.g + cell.h
 
+    def astar(self, maze):
+        direction = None
+        return direction    # 'N/S/W/E'
 
-
-
-
-
-
-
+    def right_hand_rule(self, maze):
+        direction = None
+        return direction
 
