@@ -11,10 +11,12 @@ class Cell(object):
         self._f = self._g + self._h
 
     def __str__(self):
-        return self.walls
+        walls_string = ''.join(self.walls)
+        return walls_string
 
     def __repr__(self):
-        return self.walls
+        walls_string = ''.join(self.walls)
+        return walls_string
 
 # måste ha "_" innan attributer som ska ha setters. Inte förstått varför än
 # verkar funka utan getters och setters. Låter de vara så länge
