@@ -3,7 +3,7 @@ import Maze
 from PathFinder import PathFinder
 from HelpFunctions import HelpFunctions
 import RobotContact
-import pprint
+import pprint   # pprint.pprint(matrix) ger fin print
 
 
 class Main:
@@ -32,5 +32,12 @@ class Main:
             finder.calc_h(maze, i, j)
             finder.calc_f(maze, i, j)
 
-    # startruta
-    finder.right_hand_rule(maze)
+    direction = ''
+    while direction != '0':
+        direction = finder.right_hand_rule(maze)
+        maze.current_direction = direction
+        helper.update_current_cell(maze)
+
+    if maze.current_pos_row == maze.end_row and maze.current_pos_col == maze.end_col:
+        print('Maze solved!')
+

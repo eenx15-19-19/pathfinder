@@ -6,12 +6,12 @@ class Maze(object):
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
-        self.start_y = 0
-        self.start_x = rows - 1
-        self.current_pos_x = self.start_x # börjar i start
-        self.current_pos_y = self.start_y
-        self.end_x = 0
-        self.end_y = cols - 1
+        self.start_col = 0
+        self.start_row = rows - 1
+        self.current_pos_row = self.start_row   # börjar i start
+        self.current_pos_col = self.start_col
+        self.end_row = 0
+        self.end_col = cols - 1
         # inga väggar finns förrän roboten ser dem
         self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
         for i in range(self.rows):

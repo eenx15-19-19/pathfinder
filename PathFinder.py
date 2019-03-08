@@ -7,27 +7,34 @@ from HelpFunctions import HelpFunctions
 class PathFinder:
 
 
-    def calc_g(self, maze, x, y):
-        cell = maze.matrix[x][y]
-        cell.g = abs(x - maze.start_x) + abs(y - maze.start_y)   # tror detta stämmer?
+    def calc_g(self, maze, row, col):
+        cell = maze.matrix[row][col]
+        cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer?
 
     # manhattan heuristic (första vektornorm)
-    def calc_h(self, maze, x ,y):
-        cell = maze.matrix[x][y]
-        cell.h = abs(maze.end_x - x) + abs(maze.end_y - y)
+    def calc_h(self, maze, row, col):
+        cell = maze.matrix[row][col]
+        cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
 
-    def calc_f(self, maze, x, y):
-        cell = maze.matrix[x][y]
+    def calc_f(self, maze, row, col):
+        cell = maze.matrix[row][col]
         cell.f = cell.g + cell.h
+
 
     def astar(self, maze):
         direction = None
         return direction    # 'N/S/W/E'
 
     def right_hand_rule(self, maze):
-        x = maze.current_pos_x
-        y = maze.current_pos_y
-        current_cell = maze.matrix[x][y]
+
+        row = maze.current_pos_row
+        print('Current position row = ' + str(row))
+        col = maze.current_pos_col
+        print('Current position col = ' + str(col))
+        current_cell = maze.matrix[row][col]
+
+        if row == maze.end_row and col == maze.end_col:
+            return '0'
 
         helper = HelpFunctions()
         print(str(current_cell.walls))
@@ -53,6 +60,8 @@ class PathFinder:
             print('No direction without walls')
 
         print('Direction: ' + direction)
+        direction = helper.change_direction_format(maze, direction, 'ABLR')
+        print('New Direction: ' + direction)
 
         return direction
 
