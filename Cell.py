@@ -12,7 +12,7 @@ class Cell(object):
         # till heuristics
         self._g = 0
         self._h = 0
-        self._f = self._g + self._h
+        self._f = self._g + self._g
 
     def __str__(self):
         walls_string = ''.join(self.walls)
@@ -48,4 +48,10 @@ class Cell(object):
     def h(self, value):
         self._h = value
 
+    @property
+    def f(self):
+        return self._f
 
+    @f.setter
+    def f(self, value):
+        self._f = value

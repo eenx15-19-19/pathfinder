@@ -6,12 +6,13 @@ from HelpFunctions import HelpFunctions
 
 class PathFinder:
 
-
+    # måste räkna medan den går, inte säkert att den tagit raka vägen
     def calc_g(self, maze, row, col):
         cell = maze.matrix[row][col]
         cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer?
 
     # manhattan heuristic (första vektornorm)
+    # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, row, col):
         cell = maze.matrix[row][col]
         cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
@@ -19,14 +20,20 @@ class PathFinder:
     def calc_f(self, maze, row, col):
         cell = maze.matrix[row][col]
         cell.f = cell.g + cell.h
+        return cell.f
 
 
-    def astar(self, maze):
+    def astar(self, maze, robot):
+        helper = HelpFunctions()
+
+        helper.update_current_cell(maze, robot)
+        current_cell = helper.current_cell(robot)
+
+
         direction = None
         return direction    # 'N/S/W/E'
 
     def right_hand_rule(self, maze):
-
         row = maze.current_pos_row
         print('Current position row = ' + str(row))
         col = maze.current_pos_col

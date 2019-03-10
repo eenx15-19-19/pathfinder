@@ -1,22 +1,29 @@
 class HelpFunctions:
 
-    def current_cell(self, maze):
-        return maze.current_pos_row, maze.current_pos_col
+    def current_cell(self, robot, maze):
+        cell = maze.matrix[robot.current_pos_row, robot.current_pos_col]
 
-    # lastDirection är sträng (NSWE), t.ex. N
-    def update_current_cell(self, maze):
-        if maze.current_direction == 'N':
-            maze.current_pos_row = maze.current_pos_row - 1
-        elif maze.current_direction == 'S':
-            maze.current_pos_row = maze.current_pos_row + 1
-        elif maze.current_direction == 'W':
-            maze.current_pos_col = maze.current_pos_col - 1
-        elif maze.current_direction == 'E':
-            maze.current_pos_col = maze.current_pos_col + 1
+        if robot.current_pos_col < 0 or robot.current_pos_row < 0 or robot.current_pos_col > maze.cols-1 or \
+                robot.current_pos_row > maze.rows-1:
+            print('Indexes out of range, robot has escaped')
+
+        return cell
+
+    # current_direction är sträng (NSWE), t.ex. N
+    def update_current_cell(self, maze, robot):
+        if robot.current_direction == 'N':
+            robot.current_pos_row = robot.current_pos_row - 1
+        elif robot.current_direction == 'S':
+            robot.current_pos_row = robot.current_pos_row + 1
+        elif robot.current_direction == 'W':
+            robot.current_pos_col = robot.current_pos_col - 1
+        elif robot.current_direction == 'E':
+            robot.current_pos_col = robot.current_pos_col + 1
         else:
             None
 
-        if maze.current_pos_col < 0 or maze.current_pos_row < 0:
+        if robot.current_pos_col < 0 or robot.current_pos_row < 0 or robot.current_pos_col > maze.cols-1 or \
+                robot.current_pos_row > maze.rows-1:
             print('Indexes out of range, robot has escaped')
             
         # tar en sträng walls (tex. '0000') och gör till en lista ['0', '0', '0', '0'}
@@ -77,13 +84,13 @@ class HelpFunctions:
 
     # direction är sträng av en bokstav. current_format = 'ABLR' eller 'NSWE'
     # Skriv om bättre.
-    # Borde gå att göra mycket bättre än hårdkodning, har en tanke men jobbar vidare på det sen
-    def change_direction_format(self, maze, direction, current_format):
+    # Borde gå att göra mycket bättre än hårdkodning
+    def change_direction_format(self, robot, direction, current_format):
         new_direction = ''
 
         if current_format == 'ABLR':
 
-            if maze.current_direction == 'N':
+            if robot.current_direction == 'N':
                 if direction == 'A':
                     new_direction = 'N'
                 elif direction == 'B':
@@ -94,7 +101,7 @@ class HelpFunctions:
                     new_direction = 'E'
                 else:
                     print('Error')
-            elif maze.current_direction == 'S':
+            elif robot.current_direction == 'S':
                 if direction == 'A':
                     new_direction = 'S'
                 elif direction == 'B':
@@ -105,7 +112,7 @@ class HelpFunctions:
                     new_direction = 'W'
                 else:
                     print('Error')
-            elif maze.current_direction == 'W':
+            elif robot.current_direction == 'W':
                 if direction == 'A':
                     new_direction = 'W'
                 elif direction == 'B':
@@ -116,7 +123,7 @@ class HelpFunctions:
                     new_direction = 'N'
                 else:
                     print('Error')
-            elif maze.current_direction == 'E':
+            elif robot.current_direction == 'E':
                 if direction == 'A':
                     new_direction = 'E'
                 elif direction == 'B':
