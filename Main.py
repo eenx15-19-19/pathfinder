@@ -2,6 +2,7 @@ import Cell
 import Maze
 from PathFinder import PathFinder
 from HelpFunctions import HelpFunctions
+import Robot
 import RobotContact
 import pprint   # pprint.pprint(matrix) ger fin print
 
@@ -41,6 +42,7 @@ class Main:
     rows = maze.rows
     cols = maze.cols
     matrix_f = maze.matrix_f
+    robot = Robot.Robot(maze)
 
     for i in range(rows):
         for j in range(cols):
@@ -54,10 +56,10 @@ class Main:
 
     direction = ''
     while direction != '0':
-        direction = finder.right_hand_rule(maze)
-        maze.current_direction = direction
-        helper.update_current_cell(maze)
+        direction = finder.right_hand_rule(maze, robot)
+        robot.current_direction = direction
+        helper.update_current_cell(maze, robot)
 
-    if maze.current_pos_row == maze.end_row and maze.current_pos_col == maze.end_col:
+    if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
         print('Maze solved!')
 

@@ -1,5 +1,5 @@
 class Cell(object):
-    # walls är lista av strängar t.ex. ['0', '0', '0', '1']
+    # walls är lista av strängar t.ex. ['0', '0', '0', '1'], NSWE
     # g = avstånd från start, h = avstånd till mål
     def __init__(self, walls, row, col):
         self.walls = walls

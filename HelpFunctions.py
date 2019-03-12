@@ -77,6 +77,7 @@ class HelpFunctions:
 
         return new_walls
 
+    # uppdatera! uppdatera bara listan med väggar
     def update_cell_in_maze(self, maze, cell):
         x = maze.current_pos_row
         y = maze.current_pos_col

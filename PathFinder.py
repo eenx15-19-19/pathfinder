@@ -9,7 +9,7 @@ class PathFinder:
     # måste räkna medan den går, inte säkert att den tagit raka vägen
     def calc_g(self, maze, row, col):
         cell = maze.matrix[row][col]
-        cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer?
+        cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer? det stämmer inte
 
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
@@ -17,7 +17,6 @@ class PathFinder:
         cell = maze.matrix[row][col]
         cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
 
-    # testa rebecca branch
     def calc_f(self, maze, row, col):
         cell = maze.matrix[row][col]
         cell.f = cell.g + cell.h
@@ -35,10 +34,10 @@ class PathFinder:
         direction = None
         return direction    # 'N/S/W/E'
 
-    def right_hand_rule(self, maze):
-        row = maze.current_pos_row
+    def right_hand_rule(self, maze, robot):
+        row = robot.current_pos_row
         print('Current position row = ' + str(row))
-        col = maze.current_pos_col
+        col = robot.current_pos_col
         print('Current position col = ' + str(col))
         current_cell = maze.matrix[row][col]
 
@@ -47,7 +46,7 @@ class PathFinder:
 
         helper = HelpFunctions()
         print(str(current_cell.walls))
-        walls = helper.change_wall_format(current_cell.walls, maze.current_direction, 'NSWE') # walls blir på ABLR
+        walls = helper.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE') # walls blir på ABLR
         print(str(walls))
 
         # välj håll att gå. Prio: Höger, Rätt fram, Vänster, Vänd
@@ -69,7 +68,8 @@ class PathFinder:
             print('No direction without walls')
 
         print('Direction: ' + direction)
-        direction = helper.change_direction_format(maze, direction, 'ABLR')
+        direction = helper.change_direction_format(robot, direction, 'ABLR')
+        robot.current_direction = direction
         print('New Direction: ' + direction)
 
         return direction
