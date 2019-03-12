@@ -17,6 +17,7 @@ class PathFinder:
         cell = maze.matrix[row][col]
         cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
 
+    # testa rebecca branch
     def calc_f(self, maze, row, col):
         cell = maze.matrix[row][col]
         cell.f = cell.g + cell.h
@@ -28,6 +29,7 @@ class PathFinder:
 
         helper.update_current_cell(maze, robot)
         current_cell = helper.current_cell(robot)
+
 
 
         direction = None
