@@ -4,10 +4,12 @@ from PathFinder import PathFinder
 from HelpFunctions import HelpFunctions
 import Robot
 import RobotContact
-import pprint  # pprint.pprint(matrix) ger fin print
+from Translation import Translation
+import pprint   # pprint.pprint(matrix) ger fin print
 
 
 class Main:
+
     helper = HelpFunctions()
     maze = Maze.Maze(3, 2)
 
