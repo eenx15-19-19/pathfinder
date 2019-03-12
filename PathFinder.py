@@ -72,6 +72,9 @@ class PathFinder:
         robot.current_direction = direction
         print('New Direction: ' + direction)
 
+        robot.current_direction = direction
+        helper.update_current_cell(maze, robot)
+
         return direction
 
 

@@ -4,11 +4,10 @@ from PathFinder import PathFinder
 from HelpFunctions import HelpFunctions
 import Robot
 import RobotContact
-import pprint   # pprint.pprint(matrix) ger fin print
+import pprint  # pprint.pprint(matrix) ger fin print
 
 
 class Main:
-
     helper = HelpFunctions()
     maze = Maze.Maze(3, 2)
 
@@ -21,18 +20,18 @@ class Main:
     maze.matrix[2][1].walls = helper.split_walls('0111')
 
     # 3x4
-   # maze.matrix[0][0].walls = helper.split_walls('1011')
-   # maze.matrix[0][1].walls = helper.split_walls('1010')
-   # maze.matrix[0][2].walls = helper.split_walls('1100')
-   # maze.matrix[0][3].walls = helper.split_walls('1001')
-   # maze.matrix[1][0].walls = helper.split_walls('0011')
-   # maze.matrix[1][1].walls = helper.split_walls('0011')
-   # maze.matrix[1][2].walls = helper.split_walls('1010')
-   # maze.matrix[1][3].walls = helper.split_walls('0001')
-   # maze.matrix[2][0].walls = helper.split_walls('0110')
-   # maze.matrix[2][1].walls = helper.split_walls('0101')
-   # maze.matrix[2][2].walls = helper.split_walls('0111')
-   # maze.matrix[2][3].walls = helper.split_walls('0111')
+    # maze.matrix[0][0].walls = helper.split_walls('1011')
+    # maze.matrix[0][1].walls = helper.split_walls('1010')
+    # maze.matrix[0][2].walls = helper.split_walls('1100')
+    # maze.matrix[0][3].walls = helper.split_walls('1001')
+    # maze.matrix[1][0].walls = helper.split_walls('0011')
+    # maze.matrix[1][1].walls = helper.split_walls('0011')
+    # maze.matrix[1][2].walls = helper.split_walls('1010')
+    # maze.matrix[1][3].walls = helper.split_walls('0001')
+    # maze.matrix[2][0].walls = helper.split_walls('0110')
+    # maze.matrix[2][1].walls = helper.split_walls('0101')
+    # maze.matrix[2][2].walls = helper.split_walls('0111')
+    # maze.matrix[2][3].walls = helper.split_walls('0111')
 
     for i in range(len(maze.matrix)):
         print(*maze.matrix[i])
@@ -57,9 +56,6 @@ class Main:
     direction = ''
     while direction != '0':
         direction = finder.right_hand_rule(maze, robot)
-        robot.current_direction = direction
-        helper.update_current_cell(maze, robot)
 
     if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
         print('Maze solved!')
-
