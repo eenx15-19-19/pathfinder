@@ -6,7 +6,7 @@ class Robot(object):
         self.current_pos_row = maze.start_row # börjar i start
         self.current_pos_col = maze.start_col
         self.current_direction = 'N'    # börjar med att peka norr
-        self.g = 0  # antal effektiva steg från start
+        self._g = 0  # antal effektiva steg från start
 
     @property
     def g(self):

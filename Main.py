@@ -4,6 +4,7 @@ from PathFinder import PathFinder
 from HelpFunctions import HelpFunctions
 import Robot
 import RobotContact
+from Translation import Translation
 import pprint   # pprint.pprint(matrix) ger fin print
 
 
@@ -62,4 +63,3 @@ class Main:
 
     if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
         print('Maze solved!')
-

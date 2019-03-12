@@ -2,6 +2,7 @@
 import Maze
 import Cell
 from HelpFunctions import HelpFunctions
+from Translation import Translation
 
 
 class PathFinder:
@@ -23,7 +24,7 @@ class PathFinder:
         return cell.f
 
 
-    def astar(self, maze, robot):
+    def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
 
         helper.update_current_cell(maze, robot)
@@ -45,8 +46,9 @@ class PathFinder:
             return '0'
 
         helper = HelpFunctions()
+        translator = Translation()
         print(str(current_cell.walls))
-        walls = helper.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE') # walls blir på ABLR
+        walls = translator.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE') # walls blir på ABLR
         print(str(walls))
 
         # välj håll att gå. Prio: Höger, Rätt fram, Vänster, Vänd
@@ -68,7 +70,7 @@ class PathFinder:
             print('No direction without walls')
 
         print('Direction: ' + direction)
-        direction = helper.change_direction_format(robot, direction, 'ABLR')
+        direction = translator.change_direction_format(robot, direction, 'ABLR')
         robot.current_direction = direction
         print('New Direction: ' + direction)
 
