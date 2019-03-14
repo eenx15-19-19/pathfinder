@@ -26,9 +26,28 @@ class PathFinder:
 
     def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
+        current_cell = helper.current_cell(robot)
+        available_cells = []
+        NSWE = 'N', 'S', 'W', 'E'
+
+        for i in range(len(current_cell.walls)):
+            wall = current_cell.walls[i]
+
+            if wall == 0:
+                direction = NSWE[i]
+                temp_cell = helper.get_adjacent_cell(maze, robot , direction)
+                available_cells.append(temp_cell)
+
+        for cell in available_cells:
+            calc_g(maze, cell)
+
+
+
+
+
+
 
         helper.update_current_cell(maze, robot)
-        current_cell = helper.current_cell(robot)
 
 
 
