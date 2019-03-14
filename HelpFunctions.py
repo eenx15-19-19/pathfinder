@@ -25,7 +25,26 @@ class HelpFunctions:
         if robot.current_pos_col < 0 or robot.current_pos_row < 0 or robot.current_pos_col > maze.cols-1 or \
                 robot.current_pos_row > maze.rows-1:
             print('Indexes out of range, robot has escaped')
-            
+
+
+    def get_adjacent_cell(self, maze, robot, direction):
+        row = robot.current_pos_row
+        col = robot.current_pos_col
+
+        if direction == 'N':
+            row = robot.current_pos_row - 1
+        elif direction == 'S':
+            row = robot.current_pos_row + 1
+        elif direction == 'W':
+            col = robot.current_pos_col - 1
+        elif direction == 'E':
+            col = robot.current_pos_col + 1
+        else:
+            None
+
+        return maze.matrix[row][col]
+
+
         # tar en sträng walls (tex. '0000') och gör till en lista ['0', '0', '0', '0'}
     def split_walls(self, walls):
         walls_list = list(walls)

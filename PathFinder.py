@@ -8,18 +8,19 @@ from Translation import Translation
 class PathFinder:
 
     # måste räkna medan den går, inte säkert att den tagit raka vägen
-    def calc_g(self, maze, row, col):
-        cell = maze.matrix[row][col]
+    def calc_g(self, maze, cell):
+        row = cell.row
+        col = cell.col
         cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer? det stämmer inte
 
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
-    def calc_h(self, maze, row, col):
-        cell = maze.matrix[row][col]
+    def calc_h(self, maze, cell):
+        row = cell.row
+        col = cell.col
         cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
 
-    def calc_f(self, maze, row, col):
-        cell = maze.matrix[row][col]
+    def calc_f(self, cell):
         cell.f = cell.g + cell.h
         return cell.f
 
