@@ -1,6 +1,7 @@
 # Här kan vi lägga algoritmen och saker relaterade till den
 import Maze
 import Cell
+import sys
 from HelpFunctions import HelpFunctions
 from Translation import Translation
 
@@ -22,7 +23,6 @@ class PathFinder:
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
-        return cell.f
 
 
     def astar(self, maze, robot):   # Ska göras
@@ -36,24 +36,22 @@ class PathFinder:
 
             if wall == 0:
                 direction = NSWE[i]
-                temp_cell = helper.get_adjacent_cell(maze, robot , direction)
+                temp_cell = helper.get_adjacent_cell(maze, robot, direction)
                 available_cells.append(temp_cell)
 
+        target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
+        target_cell.f = sys.maxsize
+
         for cell in available_cells:
-            calc_g(maze, cell)
+            self.calc_g(maze, cell)
+            self.calc_f(cell)
 
+            if cell.f < target_cell.f:
+                target_cell = cell
 
+        direction = helper.get_direction(current_cell, target_cell)
 
-
-
-
-
-        helper.update_current_cell(maze, robot)
-
-
-
-        direction = None
-        return direction    # 'N/S/W/E'
+        return direction, target_cell    # 'N/S/W/E'
 
     def right_hand_rule(self, maze, robot):
         row = robot.current_pos_row
@@ -98,6 +96,22 @@ class PathFinder:
         helper.update_current_cell(maze, robot)
 
         return direction
+
+    def run_pathfinder(self, maze, robot):
+
+        direction, target_cell = self.astar(maze, robot)
+
+        if target_cell.visited:
+            i = maze.shortest_path.index(target_cell)
+            del maze.shortest_path[i:len(maze.shortest_path)]
+
+        cell = maze.matrix[target_cell.row][target_cell.col]
+        cell.visited = True
+        maze.shortest_path.append(cell)
+
+        return direction, cell
+
+
 
 
 
