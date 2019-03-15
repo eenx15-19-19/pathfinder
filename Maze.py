@@ -29,6 +29,9 @@ class Maze(object):
             for j in range(self.cols):
                 self.matrix_f[i][j] = 0
 
+        # lista för shortest path
+        self.shortest_path = [self.matrix[self.start_row][self.start_col]]
+
     @property
     def matrix(self):
         return self._matrix
