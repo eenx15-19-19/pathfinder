@@ -67,6 +67,9 @@ class Main:
         if win:
             print('Enkelt')
 
+        else:
+            print('Svårt')
+
     def run_sim(self, maze, robot):
         # (Görs ej i sim) Från robot: få information om väggar
         # (Görs ej i sim) Uppdatera cell.wall i maze
