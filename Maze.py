@@ -31,7 +31,7 @@ class Maze(object):
 
         # lista för shortest path
         self.shortest_path = [self.matrix[self.start_row][self.start_col]]
-
+        self.path = [self.matrix[self.start_row][self.start_col]]
     @property
     def matrix(self):
         return self._matrix

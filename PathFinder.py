@@ -19,7 +19,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
+        cell.h = 2*(abs(maze.end_row - row) + abs(maze.end_col - col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -27,15 +27,19 @@ class PathFinder:
 
     def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
+        translator = Translation()
         current_cell = helper.current_cell(robot, maze)
         available_cells = []
         NSWE = 'N', 'S', 'W', 'E'
+        ABLR = 'A', 'B', 'L', 'R'
+        walls = translator.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE')
 
-        for i in range(len(current_cell.walls)):
-            wall = current_cell.walls[i]
+        for i in range(len(walls)):
+            wall = walls[i]
 
             if wall == '0':
-                direction = NSWE[i]
+                direction = ABLR[i]
+                direction = translator.change_direction_format(robot, direction, 'ABLR')
                 temp_cell = helper.get_adjacent_cell(maze, robot, direction)
                 available_cells.append(temp_cell)
 
@@ -48,11 +52,10 @@ class PathFinder:
 
             if cell.f < target_cell.f:
                 target_cell = cell
-            elif cell.f == target_cell.f:
-                if cell.h < target_cell.h:
-                    target_cell = cell
+            # elif cell.f == target_cell.f:
+            #   if cell.h < target_cell.h:
+            #      target_cell = cell
                 # kan vi hamna i fallet då f är lika och h är lika samtidigt?
-
 
         direction = helper.get_direction(current_cell, target_cell)
 
