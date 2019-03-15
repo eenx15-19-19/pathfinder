@@ -61,3 +61,8 @@ class Main:
 
     if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
         print('Maze solved!')
+
+    test_list = ['1', '2', '3', '4']
+    del test_list[2:len(test_list)]
+    print(test_list)
+

@@ -25,8 +25,9 @@ class HelpFunctions:
         if robot.current_pos_col < 0 or robot.current_pos_row < 0 or robot.current_pos_col > maze.cols-1 or \
                 robot.current_pos_row > maze.rows-1:
             print('Indexes out of range, robot has escaped')
-            
+
         # tar en sträng walls (tex. '0000') och gör till en lista ['0', '0', '0', '0'}
     def split_walls(self, walls):
         walls_list = list(walls)
         return walls_list
+
