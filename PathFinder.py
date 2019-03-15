@@ -19,7 +19,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = 2*(abs(maze.end_row - row) + abs(maze.end_col - col))
+        cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -52,6 +52,11 @@ class PathFinder:
 
             if cell.f < target_cell.f:
                 target_cell = cell
+            elif cell.f == target_cell.f:
+                if not cell.visited and target_cell.visited:
+                    target_cell = cell
+
+
             # elif cell.f == target_cell.f:
             #   if cell.h < target_cell.h:
             #      target_cell = cell
