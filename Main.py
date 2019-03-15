@@ -9,14 +9,14 @@ from Translation import Translation
 import pprint   # pprint.pprint(matrix) ger fin print
 
 
-class Main:
+class Main(object):
 
     helper = HelpFunctions()
 
     def sim_pi(self):
         # Initiera maze och robot
         # Vill loopa och anropa run_sim
-        None
+        print('hej')
 
     def run_sim(self, maze, robot):
         # (Görs ej i sim) Från robot: få information om väggar
@@ -26,16 +26,16 @@ class Main:
         translator = Translation()
         helper = HelpFunctions()
 
-        direction = finder.run_pathfinder(maze, robot) #NSWE
+        direction = finder.run_pathfinder(maze, robot)  # NSWE
 
         # Uppdatera robot
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
 
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
-        return instruction # Returnera instruktion
+        return instruction  # Returnera instruktion
 
-    def run(self, maze, robot, sensor_data): #Vill ha data från sensorer
+    def run(self, maze, robot, sensor_data):    # Vill ha data från sensorer
         # Från robot: få information om väggar
         # Uppdatera cell.wall i maze
 
@@ -52,8 +52,9 @@ class Main:
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
         return instruction # Returnera instruktion
 
-
     maze = Maze.Maze(3, 2)
+
+
 
     # 3x2
     maze.matrix[0][0].walls = helper.split_walls('1110')
