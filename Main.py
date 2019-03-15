@@ -13,9 +13,15 @@ class Main:
 
     def sim_pi(self):
 
+        finder = PathFinder()
         # Initiera maze och robot
         maze = Maze.Maze(3, 2)
+        for i in range(maze.rows):
+            for j in range(maze.cols):
+                finder.calc_h(maze, maze.matrix[i][j])
+
         robot = Robot.Robot(maze)
+
                                         # Endast för simulering början
         helper = HelpFunctions()
 
@@ -58,7 +64,7 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
-        if win == True:
+        if win:
             print('Enkelt')
 
         else:
@@ -78,6 +84,7 @@ class Main:
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
 
+        print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
 
         print(str(direction))
@@ -100,5 +107,7 @@ class Main:
 
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
         return instruction # Returnera instruktion
+
+
 main = Main()
 main.sim_pi()
