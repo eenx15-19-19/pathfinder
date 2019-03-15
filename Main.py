@@ -53,9 +53,8 @@ class Main:
 
         # Vill loopa och anropa run_sim
         win = False
-        k = 0
-        while not k == 4:
-            k = k + 1
+
+        while not win:
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
 
             # Skicka instruktion till microkontroller
