@@ -83,6 +83,7 @@ class Main:
         # Uppdatera robot
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
+        maze.path.append(helper.current_cell(robot, maze))
 
         print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
