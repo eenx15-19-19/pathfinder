@@ -34,7 +34,7 @@ class PathFinder:
         for i in range(len(current_cell.walls)):
             wall = current_cell.walls[i]
 
-            if wall == 0:
+            if wall == '0':
                 direction = NSWE[i]
                 temp_cell = helper.get_adjacent_cell(maze, robot, direction)
                 available_cells.append(temp_cell)
@@ -51,6 +51,7 @@ class PathFinder:
 
         direction = helper.get_direction(current_cell, target_cell)
 
+        print('Direction: ' + str(direction))
         return direction, target_cell    # 'N/S/W/E'
 
     def right_hand_rule(self, maze, robot):
@@ -104,12 +105,13 @@ class PathFinder:
         if target_cell.visited:
             i = maze.shortest_path.index(target_cell)
             del maze.shortest_path[i:len(maze.shortest_path)]
+            # hantera att cell är visited men inte med i listan
 
         cell = maze.matrix[target_cell.row][target_cell.col]
         cell.visited = True
         maze.shortest_path.append(cell)
 
-        return direction, cell
+        return direction
 
 
 

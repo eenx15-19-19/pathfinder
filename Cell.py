@@ -15,8 +15,12 @@ class Cell(object):
         self._f = self._g + self._g
 
     def __str__(self):
-        walls_string = ''.join(self.walls)
-        return walls_string
+        string = '[' + str(self.row) + '][' + str(self.col) + '] Walls: ' + ''.join(self.walls)
+        return string
+
+    def __repr__(self):
+        coord = '[' + str(self.row) + '][' + str(self.col) + ']'
+        return coord
 
 
 # måste ha "_" innan attributer som ska ha setters. Inte förstått varför än.

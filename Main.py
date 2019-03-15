@@ -13,18 +13,24 @@ class Main:
 
     def sim_pi(self):
 
+        finder = PathFinder()
         # Initiera maze och robot
         maze = Maze.Maze(3, 2)
+        for i in range(maze.rows):
+            for j in range(maze.cols):
+                finder.calc_h(maze, maze.matrix[i][j])
+
         robot = Robot.Robot(maze)
+
                                         # Endast för simulering början
         helper = HelpFunctions()
 
         # 3x2
         maze.matrix[0][0].walls = helper.split_walls('1110')
-        maze.matrix[0][1].walls = helper.split_walls('0001')
+        maze.matrix[0][1].walls = helper.split_walls('1001')
         maze.matrix[1][0].walls = helper.split_walls('1010')
         maze.matrix[1][1].walls = helper.split_walls('0001')
-        maze.matrix[2][0].walls = helper.split_walls('0011')
+        maze.matrix[2][0].walls = helper.split_walls('0111')
         maze.matrix[2][1].walls = helper.split_walls('0111')
 
         # 3x4
@@ -47,7 +53,9 @@ class Main:
 
         # Vill loopa och anropa run_sim
         win = False
-        while not win:
+        k = 0
+        while not k == 4:
+            k = k + 1
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
 
             # Skicka instruktion till microkontroller
@@ -57,7 +65,8 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
-        print('Enkelt')
+        if win:
+            print('Enkelt')
 
     def run_sim(self, maze, robot):
         # (Görs ej i sim) Från robot: få information om väggar
@@ -73,6 +82,7 @@ class Main:
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
 
+        print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
 
         return instruction # Returnera instruktion
