@@ -53,6 +53,7 @@ class Main:
             # Skicka instruktion till microkontroller
 
             # Kontrollera om vi är framme
+
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
