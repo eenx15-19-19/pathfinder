@@ -93,4 +93,3 @@ class Simma:
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
         return instruction # Returnera instruktion
 
-    sim_pi()
