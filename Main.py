@@ -93,4 +93,6 @@ class Main:
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
         return instruction # Returnera instruktion
 
-    sim_pi()
+
+main = Main()
+main.sim_pi()

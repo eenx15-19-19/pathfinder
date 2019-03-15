@@ -1,7 +1,7 @@
 class HelpFunctions:
 
     def current_cell(self, robot, maze):
-        cell = maze.matrix[robot.current_pos_row, robot.current_pos_col]
+        cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
 
         if robot.current_pos_col < 0 or robot.current_pos_row < 0 or robot.current_pos_col > maze.cols-1 or \
                 robot.current_pos_row > maze.rows-1:

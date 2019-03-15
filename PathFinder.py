@@ -27,7 +27,7 @@ class PathFinder:
 
     def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
-        current_cell = helper.current_cell(robot)
+        current_cell = helper.current_cell(robot, maze)
         available_cells = []
         NSWE = 'N', 'S', 'W', 'E'
 
