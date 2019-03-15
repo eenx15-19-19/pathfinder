@@ -21,10 +21,10 @@ class Main:
 
         # 3x2
         maze.matrix[0][0].walls = helper.split_walls('1110')
-        maze.matrix[0][1].walls = helper.split_walls('0001')
+        maze.matrix[0][1].walls = helper.split_walls('1001')
         maze.matrix[1][0].walls = helper.split_walls('1010')
         maze.matrix[1][1].walls = helper.split_walls('0001')
-        maze.matrix[2][0].walls = helper.split_walls('0011')
+        maze.matrix[2][0].walls = helper.split_walls('0111')
         maze.matrix[2][1].walls = helper.split_walls('0111')
 
         # 3x4
@@ -47,7 +47,8 @@ class Main:
 
         # Vill loopa och anropa run_sim
         win = False
-        while not win:
+        # while not win:
+        for i in range(4):
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
 
             # Skicka instruktion till microkontroller
@@ -57,7 +58,11 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
-        print('Enkelt')
+        if win == True:
+            print('Enkelt')
+
+        else:
+            print('Svårt')
 
     def run_sim(self, maze, robot):
         # (Görs ej i sim) Från robot: få information om väggar
@@ -74,6 +79,8 @@ class Main:
         helper.update_current_cell(maze, robot)
 
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
+
+        print(str(direction))
 
         return instruction # Returnera instruktion
 

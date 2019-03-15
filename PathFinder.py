@@ -34,7 +34,7 @@ class PathFinder:
         for i in range(len(current_cell.walls)):
             wall = current_cell.walls[i]
 
-            if wall == 0:
+            if wall == '0':
                 direction = NSWE[i]
                 temp_cell = helper.get_adjacent_cell(maze, robot, direction)
                 available_cells.append(temp_cell)
@@ -45,10 +45,11 @@ class PathFinder:
         for cell in available_cells:
             self.calc_g(maze, cell)
             self.calc_f(cell)
+            print(f'{cell.f}, {target_cell.f}')
 
             if cell.f < target_cell.f:
                 target_cell = cell
-
+        print(f'Vald = {target_cell}')
         direction = helper.get_direction(current_cell, target_cell)
 
         return direction, target_cell    # 'N/S/W/E'
@@ -109,7 +110,7 @@ class PathFinder:
         cell.visited = True
         maze.shortest_path.append(cell)
 
-        return direction, cell
+        return direction
 
 
 
