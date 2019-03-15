@@ -18,9 +18,6 @@ class Cell(object):
         walls_string = ''.join(self.walls)
         return walls_string
 
-    def __repr__(self):
-        walls_string = ''.join(self.walls)
-        return walls_string
 
 # måste ha "_" innan attributer som ska ha setters. Inte förstått varför än.
 # Verkar funka utan getters och setters. Låter de vara så länge

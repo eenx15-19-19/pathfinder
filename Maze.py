@@ -19,6 +19,7 @@ class Maze(object):
             for j in range(self.cols):
                 self.matrix[i][j] = Cell.Cell('0000', i, j)
 
+        self.shortest_path = []
         # startnoden är besökt
         self.matrix[self.start_row][self.start_col].visited = True
 
