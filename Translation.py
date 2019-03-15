@@ -130,7 +130,50 @@ class Translation:
                     print('Error')
 
         elif current_format == 'NSWE':
-            print('Cannot handle "NSWE" format atm')
+            if robot.current_direction == 'N':
+                if direction == 'N':
+                    new_direction = 'A'
+                elif direction == 'S':
+                    new_direction = 'B'
+                elif direction == 'W':
+                    new_direction = 'L'
+                elif direction == 'E':
+                    new_direction = 'R'
+                else:
+                    print('Error')
+            elif robot.current_direction == 'S':
+                if direction == 'N':
+                    new_direction = 'B'
+                elif direction == 'S':
+                    new_direction = 'A'
+                elif direction == 'W':
+                    new_direction = 'R'
+                elif direction == 'E':
+                    new_direction = 'L'
+                else:
+                    print('Error')
+            elif robot.current_direction == 'W':
+                if direction == 'N':
+                    new_direction = 'R'
+                elif direction == 'S':
+                    new_direction = 'L'
+                elif direction == 'W':
+                    new_direction = 'A'
+                elif direction == 'E':
+                    new_direction = 'B'
+                else:
+                    print('Error')
+            elif robot.current_direction == 'E':
+                if direction == 'N':
+                    new_direction = 'L'
+                elif direction == 'S':
+                    new_direction = 'R'
+                elif direction == 'W':
+                    new_direction = 'B'
+                elif direction == 'E':
+                    new_direction = 'A'
+                else:
+                    print('Error')
         else:
             print('Format error')
 
