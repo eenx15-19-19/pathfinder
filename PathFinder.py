@@ -50,6 +50,7 @@ class PathFinder:
             self.calc_g(maze, cell)
             self.calc_f(cell)
 
+            # prioritera lägst f. Därefter prioritera icke visited om den tidigare valda cellen är visited.
             if cell.f < target_cell.f:
                 target_cell = cell
             elif cell.f == target_cell.f:
