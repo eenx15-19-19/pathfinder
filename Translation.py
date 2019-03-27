@@ -178,3 +178,14 @@ class Translation:
             print('Format error')
 
         return new_direction
+
+    def change_maze_format(self, walls):
+        # to NSWE from NESW
+        new_walls = ['', '', '', '']
+
+        new_walls[0] = walls[0]
+        new_walls[1] = walls[2]
+        new_walls[2] = walls[3]
+        new_walls[3] = walls[1]
+
+        return new_walls
