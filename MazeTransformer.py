@@ -3,7 +3,7 @@ import binascii
 
 class MazeTransformer:
 
-    hexString = '0x01'
+    hexString = '0x09'
     hexNumber = int(hexString.lstrip('0x'))
     print(type(hexNumber))
     number = hexNumber
