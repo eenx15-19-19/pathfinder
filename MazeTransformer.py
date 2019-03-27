@@ -4,12 +4,13 @@ import pprint
 
 class MazeTransformer:
 
-    def transpose_matrix(self, matrix):
+    def transpose_matrix(self, rows, cols, element_list):
+        #anta 16x16
+        matrix = [['0000' for j in range(16)] for i in range(16)]
         # antal rader och kolumner i matrisen
-        rows = 3
-        cols = 3
+        rows = rows
+        cols = cols
         # lista med rows*cols antal element
-        list_example = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         # index för matris
         row = 0
@@ -21,15 +22,13 @@ class MazeTransformer:
         # flyttar alltid vänster 1 pga nollindexering, ökar när vi backar i raden
         move_left = 1
 
-        print(matrix)
-
-        for k in range(len(list_example)):
+        for k in range(len(element_list)):
 
             # index på element i listan
             index = cols * current_row
 
             # flytta vänster 1 pga nollindexering + 1 till för varje redan tillagt element
-            number = list_example[index - move_left]
+            number = element_list[index - move_left]
 
             matrix[row][col] = number
 
@@ -53,41 +52,49 @@ class MazeTransformer:
 
         return matrix
 
-    translator = Translation()
+    def get_matrix(self):
+        translator = Translation()
 
-    f = open("5x5.c", "r")
-    whole = f.read()
-    hextype = whole[-1577:-26]
-    matrixh = []
-    matrixb = []
-    rows = 16
-    cols = 16
+        f = open("5x5.c", "r")
+        whole = f.read()
+        # får med '\n ' ibland, men antas bara vara element. Steg 1 är att hantera det. Sen kan det finnas mer knas
+        hextype = whole[-1577:-26]
+        matrixh = []
+        matrixb = []
+        rows = 16
+        cols = 16
 
-    matrix = [['0000' for j in range(16)] for i in range(16)]
+        matrix = [['0000' for j in range(16)] for i in range(16)]
 
-    m = 0
-    n = 0
-    
-    for i in range(256):
+        m = 0
+        n = 0
 
-        number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
+        matrix = self.transpose_matrix(rows, cols, hextype)
+        for i in range(256):
 
-        bin_number = translator.change_maze_format(f'{number:0>4b}')
+            number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
 
-        matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
+            bin_number = translator.change_maze_format(f'{number:0>4b}')
 
-        for j in range(rows):
-            for k in range(cols):
-                matrix[m][n] = bin_number
+            matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
 
-        n = n + 1
-        if n == cols:
-            n = 0
-            m = m + 1
+           # for j in range(rows):
+            #    for k in range(cols):
+             #       matrix[m][n] = number
+
+            n = n + 1
+            if n == cols:
+                n = 0
+                m = m + 1
+
+        print(matrix)
+        #matrix = self.transpose_matrix(matrix, hextype)
+        return matrix
 
 
-
-
+transformer = MazeTransformer()
+new_matrix = transformer.get_matrix()
+print(new_matrix)
 
    # for element in matrixh:
     #    matrixb.append(translator.change_maze_format(f'{element:0>4b}'))
