@@ -1,7 +1,58 @@
 from Translation import Translation
 import pprint
 
+
 class MazeTransformer:
+
+    def transpose_matrix(self, matrix):
+        # antal rader och kolumner i matrisen
+        rows = 3
+        cols = 3
+        # lista med rows*cols antal element
+        list_example = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        # index för matris
+        row = 0
+        col = 0
+
+        # börjar hantera första 'raden' i listan
+        current_row = 1
+
+        # flyttar alltid vänster 1 pga nollindexering, ökar när vi backar i raden
+        move_left = 1
+
+        print(matrix)
+
+        for k in range(len(list_example)):
+
+            # index på element i listan
+            index = cols * current_row
+
+            # flytta vänster 1 pga nollindexering + 1 till för varje redan tillagt element
+            number = list_example[index - move_left]
+
+            matrix[row][col] = number
+
+            # flytta ner en rad
+            row = row + 1
+
+            # om vi når botten av matrisen, flytta upp till toppen igen
+            if row > rows:
+                row = 0
+                current_row = current_row + 1
+                col = col + 1
+                # om vi når högerkanten, flytta tillbaka till vänster igen
+                if col > cols:
+                    col = 0
+
+                # byter vi rad ska denna nollställas
+                move_left = 0
+
+                # backa en gång för varje avklarat element
+            move_left = move_left + 1
+
+        return matrix
+
     translator = Translation()
 
     f = open("5x5.c", "r")
@@ -13,35 +64,31 @@ class MazeTransformer:
     cols = 16
 
     matrix = [['0000' for j in range(16)] for i in range(16)]
-    test_matrix = [['0000' for j in range(16)] for i in range(16)]
-    matrix2 = [['0000' for j in range(16)] for i in range(16)]
-    new_matrix = [['0000' for j in range(16)] for i in range(16)]
+
     m = 0
     n = 0
+    
     for i in range(256):
-        test_number = hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16
-        number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
-        number2 = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
 
-        bin_number2 = f'{number2:0>4b}'
+        number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
+
         bin_number = translator.change_maze_format(f'{number:0>4b}')
+
         matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
+
         for j in range(rows):
             for k in range(cols):
                 matrix[m][n] = bin_number
-                test_matrix[m][n] = test_number
-                matrix2[m][n] = bin_number2
 
         n = n + 1
         if n == cols:
             n = 0
             m = m + 1
 
-    print(test_matrix)
-    print(matrix2)
-    print(matrix)
 
-    
+
+
+
    # for element in matrixh:
     #    matrixb.append(translator.change_maze_format(f'{element:0>4b}'))
 
