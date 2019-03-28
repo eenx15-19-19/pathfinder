@@ -1,10 +1,10 @@
-class test:
+class TestIgen:
     # antal rader och kolumner i matrisen
-    rows = 3
-    cols = 3
-    matrix = [['0000' for col in range(3)] for row in range(3)]
+    rows = 4
+    cols = 4
+    matrix = [['0000' for col in range(4)] for row in range(4)]
     # lista med rows*cols antal element
-    list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
     # index för matris
     row = 0
@@ -32,12 +32,12 @@ class test:
         row = row + 1
 
         # om vi når botten av matrisen, flytta upp till toppen igen
-        if row > rows:
+        if row > rows - 1:
             row = 0
             current_row = current_row + 1
             col = col + 1
-            # om vi når högerkanten, flytta tillbaka till vänster igen
-            if col > cols:
+            # om
+            if col > cols - 1:
                 col = 0
 
             # byter vi rad ska denna nollställas
