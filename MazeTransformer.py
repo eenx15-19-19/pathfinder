@@ -30,18 +30,22 @@ class MazeTransformer:
             # flytta vänster 1 pga nollindexering + 1 till för varje redan tillagt element
             number = element_list[index - move_left]
 
+            if row > 15:
+                print('1')
+            if col > 15:
+                print('2')
             matrix[row][col] = number
 
             # flytta ner en rad
             row = row + 1
 
             # om vi når botten av matrisen, flytta upp till toppen igen
-            if row > rows:
+            if row > rows-1:
                 row = 0
                 current_row = current_row + 1
                 col = col + 1
                 # om vi når högerkanten, flytta tillbaka till vänster igen
-                if col > cols:
+                if col > cols-1:
                     col = 0
 
                 # byter vi rad ska denna nollställas
@@ -61,20 +65,23 @@ class MazeTransformer:
         hextype = whole[-1577:-26]
         matrixh = []
         matrixb = []
+        hex_list = []
         rows = 16
         cols = 16
 
-        matrix = [['0000' for j in range(16)] for i in range(16)]
+       # matrix = [['0000' for j in range(16)] for i in range(16)]
 
         m = 0
         n = 0
 
-        matrix = self.transpose_matrix(rows, cols, hextype)
-        for i in range(256):
 
+        for i in range(256):
+            test_string = hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16
+            print(test_string)
             number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
 
             bin_number = translator.change_maze_format(f'{number:0>4b}')
+            hex_list.append(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)])
 
             matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
 
@@ -87,9 +94,21 @@ class MazeTransformer:
                 n = 0
                 m = m + 1
 
-        print(matrix)
         #matrix = self.transpose_matrix(matrix, hextype)
-        return matrix
+        #print(matrixh)
+        print(hextype)
+        print(matrixh)
+        print(hex_list)
+        #print(len(matrixh))
+        matrix = transformer.transpose_matrix(rows, cols, matrixh)
+
+        temp_matrix = [['0000' for j in range(16)] for i in range(16)]
+
+        for i in range(16):
+            for j in range(16):
+                temp_matrix[i][j] = hex(matrix[i][j])
+        #print(matrix)
+        #print(temp_matrix)
 
 
 transformer = MazeTransformer()
