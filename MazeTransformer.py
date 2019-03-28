@@ -77,10 +77,11 @@ class MazeTransformer:
 
         for i in range(256):
             test_string = hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16
-            print(test_string)
+            #print(test_string)
             number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
-
+            #print(number)
             bin_number = translator.change_maze_format(f'{number:0>4b}')
+            #print(bin_number)
             hex_list.append(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)])
 
             matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
@@ -96,9 +97,9 @@ class MazeTransformer:
 
         #matrix = self.transpose_matrix(matrix, hextype)
         #print(matrixh)
-        print(hextype)
-        print(matrixh)
-        print(hex_list)
+        #print(hextype)
+        #print(matrixh)
+        #print(hex_list)
         #print(len(matrixh))
         matrix = transformer.transpose_matrix(rows, cols, matrixh)
 
@@ -108,12 +109,12 @@ class MazeTransformer:
             for j in range(16):
                 temp_matrix[i][j] = hex(matrix[i][j])
         #print(matrix)
-        #print(temp_matrix)
+        print(temp_matrix)
 
 
 transformer = MazeTransformer()
 new_matrix = transformer.get_matrix()
-print(new_matrix)
+#print(new_matrix)
 
    # for element in matrixh:
     #    matrixb.append(translator.change_maze_format(f'{element:0>4b}'))
