@@ -185,7 +185,7 @@ class Translation:
 
         new_walls[0] = walls[3]
         new_walls[1] = walls[1]
-        new_walls[2] = walls[2]
-        new_walls[3] = walls[0]
+        new_walls[2] = walls[0]
+        new_walls[3] = walls[2]
 
         return new_walls
