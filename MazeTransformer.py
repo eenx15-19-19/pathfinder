@@ -61,7 +61,6 @@ class MazeTransformer:
 
         f = open("5x5.c", "r")
         whole = f.read()
-        # får med '\n ' ibland, men antas bara vara element. Steg 1 är att hantera det. Sen kan det finnas mer knas
         hextype = whole[-1577:-26]
         elements_list = []
         rows = 16
@@ -75,14 +74,13 @@ class MazeTransformer:
                 k = k + 1
 
         matrix = transformer.transpose_matrix(rows, cols, elements_list)
-        temp_matrix = transformer.transpose_matrix(rows, cols, elements_list)
 
         for i in range(16):
             for j in range(16):
                 number = matrix[i][j]
                 matrix[i][j] = translator.change_maze_format(f'{number:0>4b}')
-        print(elements_list)
-        return temp_matrix
+
+        return matrix
 
 
 transformer = MazeTransformer()
