@@ -67,19 +67,25 @@ class MazeTransformer:
         rows = 16
         cols = 16
 
+        k = 0
         for i in range(256):
-            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
+            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6 + k) - 4:hextype.index(",", 1 + i * 6 + k)], 16))
+
+            if i % 16 == 0:
+                k = k + 1
 
         matrix = transformer.transpose_matrix(rows, cols, elements_list)
+        temp_matrix = transformer.transpose_matrix(rows, cols, elements_list)
 
         for i in range(16):
             for j in range(16):
                 number = matrix[i][j]
                 matrix[i][j] = translator.change_maze_format(f'{number:0>4b}')
-
-        return matrix
+        print(elements_list)
+        return temp_matrix
 
 
 transformer = MazeTransformer()
 new_matrix = transformer.get_matrix()
+
 print(new_matrix)
