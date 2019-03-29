@@ -68,7 +68,8 @@ class MazeTransformer:
 
         k = 0
         for i in range(256):
-            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6 + k) - 4:hextype.index(",", 1 + i * 6 + k)], 16))
+            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6 + k) - 4:
+                                             hextype.index(",", 1 + i * 6 + k)], 16))
 
             if i % 16 == 0:
                 k = k + 1

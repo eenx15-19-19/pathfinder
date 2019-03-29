@@ -53,9 +53,9 @@ class PathFinder:
             # prioritera lägst f. Därefter prioritera icke visited om den tidigare valda cellen är visited.
             if cell.f < target_cell.f:
                 target_cell = cell
-            # elif cell.f == target_cell.f:
-            #   if cell.h < target_cell.h:
-            #      target_cell = cell
+            elif cell.f == target_cell.f:
+                if not cell.visited and target_cell.visited:
+                    target_cell = cell
                 # kan vi hamna i fallet då f är lika och h är lika samtidigt?
 
         direction = helper.get_direction(current_cell, target_cell)
