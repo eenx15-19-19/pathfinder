@@ -63,81 +63,23 @@ class MazeTransformer:
         whole = f.read()
         # får med '\n ' ibland, men antas bara vara element. Steg 1 är att hantera det. Sen kan det finnas mer knas
         hextype = whole[-1577:-26]
-        matrixh = []
-        matrixb = []
-        hex_list = []
+        elements_list = []
         rows = 16
         cols = 16
 
-       # matrix = [['0000' for j in range(16)] for i in range(16)]
-
-        m = 0
-        n = 0
-
-
         for i in range(256):
-            test_string = hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16
-            #print(test_string)
-            number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
-            print(number)
-            bin_number = translator.change_maze_format(f'{number:0>4b}')
-            print(bin_number)
-            hex_list.append(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)])
+            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
 
-            matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
-
-           # for j in range(rows):
-            #    for k in range(cols):
-             #       matrix[m][n] = number
-
-            n = n + 1
-            if n == cols:
-                n = 0
-                m = m + 1
-
-        #matrix = self.transpose_matrix(matrix, hextype)
-        #print(matrixh)
-        #print(hextype)
-        #print(matrixh)
-        #print(hex_list)
-        #print(len(matrixh))
-        matrix = transformer.transpose_matrix(rows, cols, matrixh)
-
-        temp_matrix = [['0000' for j in range(16)] for i in range(16)]
+        matrix = transformer.transpose_matrix(rows, cols, elements_list)
 
         for i in range(16):
             for j in range(16):
-                temp_matrix[i][j] = hex(matrix[i][j])
-        #print(matrix)
-        #print(temp_matrix)
+                number = matrix[i][j]
+                matrix[i][j] = translator.change_maze_format(f'{number:0>4b}')
+
+        return matrix
 
 
 transformer = MazeTransformer()
 new_matrix = transformer.get_matrix()
-#print(new_matrix)
-
-   # for element in matrixh:
-    #    matrixb.append(translator.change_maze_format(f'{element:0>4b}'))
-
- #   for i in range(rows):
-  #      for j in range(cols):
-   #         number = matrix[i][j]
-
-    #        number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
-     #       matrix[i][j] = translator.change_maze_format(f'{number:0>4b}')
-
-  #  print(matrixh)
-  #  print(matrix)
-
-    #hexString = '0x01'
-    #hexNumber = int(hexString.lstrip('0x'))
-    #print(type(hexNumber))
-    #number = hexNumber
-    #bin_number = bin(number).lstrip('0b').zfill(4)
-    #print(bin_number)
-
-    #translator = Translation()
-
-    #wall = translator.change_maze_format(bin_number)
-    #print(wall)
-    # NESW gör om till NSWE
+print(new_matrix)
