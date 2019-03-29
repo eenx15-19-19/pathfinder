@@ -61,14 +61,17 @@ class MazeTransformer:
 
         f = open("5x5.c", "r")
         whole = f.read()
-        # får med '\n ' ibland, men antas bara vara element. Steg 1 är att hantera det. Sen kan det finnas mer knas
         hextype = whole[-1577:-26]
         elements_list = []
         rows = 16
         cols = 16
 
+        k = 0
         for i in range(256):
-            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
+            elements_list.append(int(hextype[hextype.index(",", 1 + i * 6 + k) - 4:hextype.index(",", 1 + i * 6 + k)], 16))
+
+            if i % 16 == 0:
+                k = k + 1
 
         matrix = transformer.transpose_matrix(rows, cols, elements_list)
 
@@ -82,4 +85,5 @@ class MazeTransformer:
 
 transformer = MazeTransformer()
 new_matrix = transformer.get_matrix()
+
 print(new_matrix)
