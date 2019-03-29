@@ -79,9 +79,9 @@ class MazeTransformer:
             test_string = hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16
             #print(test_string)
             number = int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16)
-            #print(number)
+            print(number)
             bin_number = translator.change_maze_format(f'{number:0>4b}')
-            #print(bin_number)
+            print(bin_number)
             hex_list.append(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)])
 
             matrixh.append(int(hextype[hextype.index(",", 1 + i * 6) - 4:hextype.index(",", 1 + i * 6)], 16))
@@ -109,7 +109,7 @@ class MazeTransformer:
             for j in range(16):
                 temp_matrix[i][j] = hex(matrix[i][j])
         #print(matrix)
-        print(temp_matrix)
+        #print(temp_matrix)
 
 
 transformer = MazeTransformer()
