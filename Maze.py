@@ -1,5 +1,5 @@
 import Cell
-
+from MazeTransformer import MazeTransformer
 
 class Maze(object):
     # rows = antal rader, cols = antal kolonner
@@ -10,14 +10,16 @@ class Maze(object):
         self.start_row = rows - 1
 
         # lösningen placerad i övre högre hörnet
-        self.end_row = 0
-        self.end_col = cols - 1
+        self.end_row = 8
+        self.end_col = 7
 
+        transformer = MazeTransformer()
+        self._matrix = transformer.get_matrix()
         # inga väggar finns förrän roboten ser dem
-        self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
+       # self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
         for i in range(self.rows):
             for j in range(self.cols):
-                self.matrix[i][j] = Cell.Cell('0000', i, j)
+                self._matrix[i][j] = Cell.Cell(self._matrix[i][j], i, j)
 
         self.shortest_path = []
         # startnoden är besökt
