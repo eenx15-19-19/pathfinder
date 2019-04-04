@@ -10,8 +10,8 @@ class Maze(object):
         self.start_row = rows - 1
 
         # lösningen placerad i övre högre hörnet
-        self.end_row = 8
-        self.end_col = 7
+        self.end_row = 7
+        self.end_col = 8
 
         transformer = MazeTransformer()
         self._matrix = transformer.get_matrix()

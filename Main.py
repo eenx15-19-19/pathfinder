@@ -23,6 +23,7 @@ class Main:
 
         robot = Robot.Robot(maze)
 
+        print(maze.matrix[maze.end_row][maze.end_col])
                                         # Endast för simulering början
         helper = HelpFunctions()
 
