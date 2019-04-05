@@ -4,6 +4,7 @@ import Cell
 import sys
 from HelpFunctions import HelpFunctions
 from Translation import Translation
+import Node
 from PathBuilder import PathBuilder
 import queue as q
 
@@ -37,9 +38,14 @@ class PathFinder:
 
         queue = q.Queue
         end_nodes = q.PriorityQueue
+        queue = q.Queue()
+        current_node = Node.Node(current_cell)
+        end_nodes = []
+        list_cells = []
 
         pb = PathBuilder()
         pb.path_builder(maze, current_cell, queue, end_nodes)
+        pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
 
         for cell in available_cells:
             self.calc_g(maze, cell)
