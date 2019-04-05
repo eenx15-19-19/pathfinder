@@ -37,8 +37,8 @@ class PathFinder:
         target_cell.f = sys.maxsize
 
         queue = q.Queue()
+        end_nodes = q.PriorityQueue()
         current_node = Node.Node(current_cell)
-        end_nodes = []
         list_cells = []
 
         pb = PathBuilder()

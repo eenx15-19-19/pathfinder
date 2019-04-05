@@ -7,7 +7,7 @@ import queue as q
 
 class PathBuilder:
 
-    def path_builder(self, maze, node: Node, queue: q, end_nodes, list_cells):
+    def path_builder(self, maze, node: Node, queue: q.Queue, end_nodes: q.PriorityQueue, list_cells):
         list_cells.append(node.cell)
 
         helper = HelpFunctions()
@@ -15,7 +15,6 @@ class PathBuilder:
 
         available_cells = []
         NSWE = 'N', 'S', 'W', 'E'
-        ABLR = 'A', 'B', 'L', 'R'
         walls = node.cell.walls
 
         if node.cell.visited:
@@ -37,7 +36,7 @@ class PathBuilder:
 
         else:
             pf.calc_h(maze, node.cell)
-            end_nodes.append(node)
+            end_nodes.put(node.h + node.depth, node)
 
         if not queue:
             return self.find_best()
@@ -45,5 +44,5 @@ class PathBuilder:
         next_node = queue.get()
         self.path_builder(maze, next_node, queue, end_nodes, list_cells)
 
-    def find_best(self):
-        None
+    def find_best(self, end_nodes):
+        return end_nodes.get()
