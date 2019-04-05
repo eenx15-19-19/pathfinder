@@ -37,7 +37,8 @@ class PathBuilder:
         else:
             pf.calc_h(maze, node.cell)
             pf.calc_g(node.parent, node)
-            end_nodes.put(node.cell.h + node.depth + node.cell.g, node) # knasar något så kolla om
+            node.fake_f = node.cell.h + node.depth + node.cell.g
+            end_nodes.put(node)     # knasar något så kolla om
             # depth ska adderas såhär på g
 
         if not queue:
@@ -54,3 +55,4 @@ class PathBuilder:
             best_node = best_node.parent
 
         return best_node
+

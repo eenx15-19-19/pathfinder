@@ -8,5 +8,5 @@ class Node(object):
         self.parent = None
         self.depth = None
         self.explored = False
-
+        self.fake_f = sys.maxsize
 
