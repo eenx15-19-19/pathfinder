@@ -12,7 +12,7 @@ class Cell(object):
         # till heuristics
         self._g = 0
         self._h = 0
-        self._f = self._g + self._g
+        self._f = self._g + self._h
 
     def __str__(self):
         string = '[' + str(self.row) + '][' + str(self.col) + '] Walls: ' + ''.join(self.walls)

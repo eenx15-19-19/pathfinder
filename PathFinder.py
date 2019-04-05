@@ -4,7 +4,8 @@ import Cell
 import sys
 from HelpFunctions import HelpFunctions
 from Translation import Translation
-
+import asyncio
+from PathBuilder import PathBuilder
 
 class PathFinder:
 
@@ -27,24 +28,17 @@ class PathFinder:
 
     def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
-        translator = Translation()
+
         current_cell = helper.current_cell(robot, maze)
         available_cells = []
-        NSWE = 'N', 'S', 'W', 'E'
-        ABLR = 'A', 'B', 'L', 'R'
-        walls = translator.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE')
-
-        for i in range(len(walls)):
-            wall = walls[i]
-
-            if wall == '0':
-                direction = ABLR[i]
-                direction = translator.change_direction_format(robot, direction, 'ABLR')
-                temp_cell = helper.get_adjacent_cell(maze, robot, direction)
-                available_cells.append(temp_cell)
 
         target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
         target_cell.f = sys.maxsize
+
+        queue = asyncio.Queue()
+
+        pb = PathBuilder()
+        pb.path_builder(maze, current_cell, queue)
 
         for cell in available_cells:
             self.calc_g(maze, cell)
