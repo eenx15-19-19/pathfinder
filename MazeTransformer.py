@@ -6,7 +6,7 @@ class MazeTransformer:
 
     def transpose_matrix(self, rows, cols, element_list):
         #anta 16x16
-        matrix = [['0000' for j in range(16)] for i in range(16)]
+        matrix = [['0000' for j in range(rows)] for i in range(cols)]
         # antal rader och kolumner i matrisen
         rows = rows
         cols = cols
@@ -30,10 +30,6 @@ class MazeTransformer:
             # flytta vänster 1 pga nollindexering + 1 till för varje redan tillagt element
             number = element_list[index - move_left]
 
-            if row > 15:
-                print('1')
-            if col > 15:
-                print('2')
             matrix[row][col] = number
 
             # flytta ner en rad
@@ -71,13 +67,13 @@ class MazeTransformer:
             elements_list.append(int(hextype[hextype.index(",", 1 + i * 6 + k) - 4:
                                              hextype.index(",", 1 + i * 6 + k)], 16))
 
-            if i % 16 == 0:
+            if i % rows == 0:
                 k = k + 1
 
         matrix = transformer.transpose_matrix(rows, cols, elements_list)
 
-        for i in range(16):
-            for j in range(16):
+        for i in range(rows):
+            for j in range(cols):
                 number = matrix[i][j]
                 matrix[i][j] = translator.change_maze_format(f'{number:0>4b}')
 
@@ -87,4 +83,4 @@ class MazeTransformer:
 transformer = MazeTransformer()
 new_matrix = transformer.get_matrix()
 
-print(new_matrix)
+#print(new_matrix)

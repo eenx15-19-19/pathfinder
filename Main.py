@@ -15,13 +15,15 @@ class Main:
 
         finder = PathFinder()
         # Initiera maze och robot
-        maze = Maze.Maze(3, 4)
+
+        maze = Maze.Maze(16, 16)
         for i in range(maze.rows):
             for j in range(maze.cols):
                 finder.calc_h(maze, maze.matrix[i][j])
 
         robot = Robot.Robot(maze)
 
+        print(maze.matrix[maze.end_row][maze.end_col])
                                         # Endast för simulering början
         helper = HelpFunctions()
 
@@ -34,21 +36,21 @@ class Main:
         # maze.matrix[2][1].walls = helper.split_walls('0111')
 
         # 3x4
-        maze.matrix[0][0].walls = helper.split_walls('1011')
-        maze.matrix[0][1].walls = helper.split_walls('1010')
-        maze.matrix[0][2].walls = helper.split_walls('1100')
-        maze.matrix[0][3].walls = helper.split_walls('1001')
-        maze.matrix[1][0].walls = helper.split_walls('0011')
-        maze.matrix[1][1].walls = helper.split_walls('0011')
-        maze.matrix[1][2].walls = helper.split_walls('1010')
-        maze.matrix[1][3].walls = helper.split_walls('0001')
-        maze.matrix[2][0].walls = helper.split_walls('0110')
-        maze.matrix[2][1].walls = helper.split_walls('0101')
-        maze.matrix[2][2].walls = helper.split_walls('0111')
-        maze.matrix[2][3].walls = helper.split_walls('0111')
+       # maze.matrix[0][0].walls = helper.split_walls('1011')
+       # maze.matrix[0][1].walls = helper.split_walls('1010')
+       # maze.matrix[0][2].walls = helper.split_walls('1100')
+       # maze.matrix[0][3].walls = helper.split_walls('1001')
+       # maze.matrix[1][0].walls = helper.split_walls('0011')
+        #maze.matrix[1][1].walls = helper.split_walls('0011')
+        #maze.matrix[1][2].walls = helper.split_walls('1010')
+        #maze.matrix[1][3].walls = helper.split_walls('0001')
+        #maze.matrix[2][0].walls = helper.split_walls('0110')
+        #maze.matrix[2][1].walls = helper.split_walls('0101')
+        #maze.matrix[2][2].walls = helper.split_walls('0111')
+        #maze.matrix[2][3].walls = helper.split_walls('0111')
 
-        for i in range(len(maze.matrix)):
-            print(*maze.matrix[i])
+      #  for i in range(len(maze.matrix)):
+      #      print(*maze.matrix[i])
                                         # Endast för simulering slut
 
         # Vill loopa och anropa run_sim
