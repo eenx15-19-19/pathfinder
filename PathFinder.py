@@ -11,10 +11,14 @@ import queue as q
 class PathFinder:
 
     # måste räkna medan den går, inte säkert att den tagit raka vägen
-    def calc_g(self, maze, cell):
+    def set_g(self, robot, cell):
         row = cell.row
         col = cell.col
-        cell.g = abs(row - maze.start_row) + abs(col - maze.start_col)   # tror detta stämmer? det stämmer inte
+        cell.g = robot.g   # tror detta stämmer? det stämmer inte
+
+    def calc_g(self, parent_node: Node.Node, child_node: Node.Node):
+        parent_g = parent_node.cell.g
+        child_node.cell.g = parent_g + 1
 
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
@@ -26,15 +30,12 @@ class PathFinder:
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
 
-
     def astar(self, maze, robot):   # Ska göras
         helper = HelpFunctions()
 
         current_cell = helper.current_cell(robot, maze)
-        available_cells = []
 
-        target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
-        target_cell.f = sys.maxsize
+        available_cells = []
 
         queue = q.Queue()
         end_nodes = q.PriorityQueue()
@@ -44,8 +45,11 @@ class PathFinder:
         pb = PathBuilder()
         pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
 
+        target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
+        target_cell.f = sys.maxsize
+
         for cell in available_cells:
-            self.calc_g(maze, cell)
+
             self.calc_f(cell)
 
             # prioritera lägst f. Därefter prioritera icke visited om den tidigare valda cellen är visited.
@@ -112,10 +116,13 @@ class PathFinder:
         if target_cell.visited:
             i = maze.shortest_path.index(target_cell)
             del maze.shortest_path[i:len(maze.shortest_path)]
+            robot.g = target_cell.g
             # hantera att cell är visited men inte med i listan
 
         cell = maze.matrix[target_cell.row][target_cell.col]
         cell.visited = True
+        self.set_g(robot, cell)
+
         maze.shortest_path.append(cell)
 
         return direction

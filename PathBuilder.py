@@ -36,13 +36,21 @@ class PathBuilder:
 
         else:
             pf.calc_h(maze, node.cell)
-            end_nodes.put(node.h + node.depth, node)
+            pf.calc_g(node.parent, node)
+            end_nodes.put(node.cell.h + node.depth + node.cell.g, node) # knasar något så kolla om
+            # depth ska adderas såhär på g
 
         if not queue:
-            return self.find_best()
+            return self.find_best(end_nodes)
 
         next_node = queue.get()
         self.path_builder(maze, next_node, queue, end_nodes, list_cells)
 
     def find_best(self, end_nodes):
-        return end_nodes.get()
+
+        best_node = end_nodes.get()
+
+        for i in range(best_node.depth - 1):
+            best_node = best_node.parent
+
+        return best_node
