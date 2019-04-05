@@ -4,8 +4,9 @@ import Cell
 import sys
 from HelpFunctions import HelpFunctions
 from Translation import Translation
-import asyncio
+import Node
 from PathBuilder import PathBuilder
+import queue as q
 
 class PathFinder:
 
@@ -35,10 +36,13 @@ class PathFinder:
         target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
         target_cell.f = sys.maxsize
 
-        queue = asyncio.Queue()
+        queue = q.Queue()
+        current_node = Node.Node(current_cell)
+        end_nodes = []
+        list_cells = []
 
         pb = PathBuilder()
-        pb.path_builder(maze, current_cell, queue)
+        pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
 
         for cell in available_cells:
             self.calc_g(maze, cell)
