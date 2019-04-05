@@ -36,15 +36,12 @@ class PathFinder:
         target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
         target_cell.f = sys.maxsize
 
-        queue = q.Queue
-        end_nodes = q.PriorityQueue
         queue = q.Queue()
+        end_nodes = q.PriorityQueue()
         current_node = Node.Node(current_cell)
-        end_nodes = []
         list_cells = []
 
         pb = PathBuilder()
-        pb.path_builder(maze, current_cell, queue, end_nodes)
         pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
 
         for cell in available_cells:

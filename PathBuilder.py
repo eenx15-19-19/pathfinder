@@ -7,7 +7,7 @@ import queue as q
 
 class PathBuilder:
 
-    def path_builder(self, maze, node: Node, queue: q, end_nodes, list_cells):
+    def path_builder(self, maze, node: Node, queue: q.Queue, end_nodes: q.PriorityQueue, list_cells):
         list_cells.append(node.cell)
 
         helper = HelpFunctions()
@@ -44,7 +44,5 @@ class PathBuilder:
         next_node = queue.get()
         self.path_builder(maze, next_node, queue, end_nodes, list_cells)
 
-    def find_best(self):
-        None
     def find_best(self, end_nodes):
         return end_nodes.get()
