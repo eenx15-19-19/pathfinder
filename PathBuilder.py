@@ -2,7 +2,8 @@ import Node
 import Translation as translator
 from HelpFunctions import HelpFunctions
 from PathFinder import PathFinder
-import asyncio
+import queue as q
+
 
 class PathBuilder:
 
@@ -11,13 +12,11 @@ class PathBuilder:
 
         helper = HelpFunctions()
         pf = PathFinder()
+        end_nodes = end_nodes
 
         available_cells = []
         NSWE = 'N', 'S', 'W', 'E'
-        ABLR = 'A', 'B', 'L', 'R'
         walls = node.cell.walls
-
-        queue = asyncio.Queue()
 
         if node.cell.visited:
             for i in range(len(walls)):
@@ -41,7 +40,7 @@ class PathBuilder:
 
         else:
             pf.calc_h(maze, node.cell)
-            end_nodes.append(node)
+            end_nodes.put(node.h + node.depth, node)
 
-    def find_best(self):
-        None
+    def find_best(self, end_nodes):
+        return end_nodes.get()
