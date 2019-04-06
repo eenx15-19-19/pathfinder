@@ -26,7 +26,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = 2*(abs(maze.end_row - row) + abs(maze.end_col - col))
+        cell.h = (abs(maze.end_row - row) + abs(maze.end_col - col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -119,6 +119,9 @@ class PathFinder:
         direction, target_cell = self.astar(maze, robot)
 
         if target_cell.visited:
+            test = maze.shortest_path
+            print('hej')
+            print(test)
             i = maze.shortest_path.index(target_cell)
             del maze.shortest_path[i:len(maze.shortest_path)]
             robot.g = target_cell.g

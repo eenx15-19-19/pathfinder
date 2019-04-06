@@ -7,7 +7,10 @@ import Robot
 import RobotContact
 from Translation import Translation
 import pprint   # pprint.pprint(matrix) ger fin print
-
+import PathBuilder
+import Node
+import queue
+import CustomList
 
 class Main:
 
@@ -61,6 +64,8 @@ class Main:
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
             length = length + 1
             print(length)
+            if length == 67:
+                print('nu börjar kaos')
             # Skicka instruktion till microkontroller
 
             # Kontrollera om vi är framme
@@ -68,6 +73,16 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
+        start_cell = maze.matrix[maze.start_row][maze.start_col]
+        start_node = Node.Node(start_cell)
+        builder = PathBuilder.PathBuilder()
+        test_queue = queue.Queue()
+        end_nodes = CustomList.CustomList()
+        list_cells = []
+        dummy_node = builder.path_builder(maze, start_node, test_queue, end_nodes, list_cells)
+
+        print(dummy_node.cell)
+        print('hej')
         if win:
             print('Enkelt')
 
