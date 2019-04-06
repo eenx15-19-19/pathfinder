@@ -56,9 +56,11 @@ class Main:
         # Vill loopa och anropa run_sim
         win = False
 
+        length = 0
         while not win:
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
-
+            length = length + 1
+            print(length)
             # Skicka instruktion till microkontroller
 
             # Kontrollera om vi är framme

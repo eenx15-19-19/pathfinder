@@ -1,7 +1,7 @@
 import Node
 import Translation as translator
 from HelpFunctions import HelpFunctions
-from PathFinder import PathFinder
+import PathFinder
 import queue as q
 import CustomList
 
@@ -11,7 +11,7 @@ class PathBuilder:
         list_cells.append(node.cell)
 
         helper = HelpFunctions()
-        pf = PathFinder()
+        pf = PathFinder.PathFinder()
 
         available_cells = []
         NSWE = 'N', 'S', 'W', 'E'
@@ -52,11 +52,11 @@ class PathBuilder:
             end_nodes.add(node)     # knasar något så kolla om
             # depth ska adderas såhär på g
 
-        if not queue:
+        if queue.empty():
             return self.find_best(end_nodes)
-
-        next_node = queue.get()
-        self.path_builder(maze, next_node, queue, end_nodes, list_cells)
+        else:
+            next_node = queue.get()
+            return self.path_builder(maze, next_node, queue, end_nodes, list_cells)
 
     def find_best(self, end_nodes):
 

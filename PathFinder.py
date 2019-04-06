@@ -26,7 +26,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = abs(maze.end_row - row) + abs(maze.end_col - col)
+        cell.h = 2*(abs(maze.end_row - row) + abs(maze.end_col - col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -45,6 +45,10 @@ class PathFinder:
 
         pb = PathBuilder()
         next_node = pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
+
+        direction = helper.get_direction(current_cell, next_node.cell)
+
+        return direction, next_node.cell
 
        # target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
        # target_cell.f = sys.maxsize

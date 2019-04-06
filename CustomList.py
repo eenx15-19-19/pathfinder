@@ -5,7 +5,6 @@ class CustomList(object):
 
     def add(self, node):
         index = self.bin_search(self.custom_list, node)     # hitta den plats där den ska sättas in
-        print(type(index))
         self.custom_list.insert(index, node)
 
     def delete(self, node):
@@ -14,6 +13,13 @@ class CustomList(object):
 
     def get_first(self):
         return self.custom_list[0]
+
+    def __str__(self):
+        string = ''
+        for i in range(len(self.custom_list)):
+            string = string + str(self.custom_list[i]) + ', '
+
+        return string
 
     def bin_search(self, custom_list, node):
         lo = 0
@@ -46,7 +52,9 @@ class CustomList(object):
                     other_value = custom_list[mid].direction_value
                 elif value_comp == 2:
                     return mid
+                else:
+                    hi = lo
 
-                value_comp = + 1
+                value_comp = value_comp + 1
 
         return int(mid)
