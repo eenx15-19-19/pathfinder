@@ -44,7 +44,8 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        next_node = pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
+        end_nodes = pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
+        next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
 
@@ -119,9 +120,6 @@ class PathFinder:
         direction, target_cell = self.astar(maze, robot)
 
         if target_cell.visited:
-            test = maze.shortest_path
-            print('hej')
-            print(test)
             i = maze.shortest_path.index(target_cell)
             del maze.shortest_path[i:len(maze.shortest_path)]
             robot.g = target_cell.g

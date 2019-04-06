@@ -53,7 +53,7 @@ class PathBuilder:
             # depth ska adderas såhär på g
 
         if queue.empty():
-            return self.find_best(end_nodes)
+            return end_nodes
         else:
             next_node = queue.get()
             return self.path_builder(maze, next_node, queue, end_nodes, list_cells)
@@ -67,3 +67,14 @@ class PathBuilder:
 
         return best_node
 
+    def find_path(self, end_node):
+
+        prev_node = end_node
+
+        path_list = []
+
+        for i in range(prev_node.depth + 1):
+            path_list.append(prev_node.cell)
+            prev_node = prev_node.parent
+
+        return path_list

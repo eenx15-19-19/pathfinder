@@ -63,7 +63,7 @@ class Main:
         while not win:
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
             length = length + 1
-            print(length)
+            print('Steg tagna: ' + str(length))
             if length == 67:
                 print('nu börjar kaos')
             # Skicka instruktion till microkontroller
@@ -73,16 +73,22 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
+        # Kan ta fram shortest_path mha detta tror jag. Ska jämföra med det vi får från vår förra funktion för detta
         start_cell = maze.matrix[maze.start_row][maze.start_col]
         start_node = Node.Node(start_cell)
         builder = PathBuilder.PathBuilder()
         test_queue = queue.Queue()
         end_nodes = CustomList.CustomList()
         list_cells = []
-        dummy_node = builder.path_builder(maze, start_node, test_queue, end_nodes, list_cells)
+        end_nodes = builder.path_builder(maze, start_node, test_queue, end_nodes, list_cells)
+        goal = end_nodes.get_first()
 
-        print(dummy_node.cell)
-        print('hej')
+        path_list = builder.find_path(goal)
+        path_list.pop(0)
+        path_list.reverse()
+        path_list.append(maze.matrix[robot.current_pos_row][robot.current_pos_col])
+
+        print('Kortaste vägen är: ' + str(len(path_list)) + ' antal steg.')
         if win:
             print('Enkelt')
 
