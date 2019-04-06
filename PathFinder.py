@@ -7,6 +7,7 @@ from Translation import Translation
 import Node
 from PathBuilder import PathBuilder
 import queue as q
+import CustomList
 
 class PathFinder:
 
@@ -38,7 +39,7 @@ class PathFinder:
         available_cells = []
 
         queue = q.Queue()
-        end_nodes = q.PriorityQueue()
+        end_nodes = CustomList.CustomList()
         current_node = Node.Node(current_cell)
         list_cells = []
 
