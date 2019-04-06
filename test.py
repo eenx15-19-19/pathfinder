@@ -1,49 +1,68 @@
-class TestIgen:
-    # antal rader och kolumner i matrisen
-    rows = 4
-    cols = 4
-    matrix = [['0000' for col in range(4)] for row in range(4)]
-    # lista med rows*cols antal element
-    list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+import Cell
+from HelpFunctions import HelpFunctions
+import Node
+from operator import itemgetter
+import queue
+import CustomList
 
-    # index för matris
-    row = 0
-    col = 0
+class test:
 
-    # börjar hantera första 'raden' i listan
-    current_row = 1
+    test_list = []
+    helper = HelpFunctions()
+    cell1 = Cell.Cell(helper.split_walls('0000'), 0, 0)
+    cell2 = Cell.Cell(helper.split_walls('0100'), 1, 1)
+    cell3 = Cell.Cell(helper.split_walls('1000'), 2, 2)
+    cell4 = Cell.Cell(helper.split_walls('1100'), 3, 3)
 
-    # flyttar alltid vänster 1 pga nollindexering, ökar när vi backar i raden
-    move_left = 1
+    node1 = Node.Node(cell1)
+    node1.fake_f = 4
+    node1.fake_h = 2
+    node1.direction_value = 3
 
-    print(matrix)
+    node2 = Node.Node(cell2)
+    node2.fake_f = 4
+    node2.fake_h = 3
+    node2.direction_value = 6
 
-    for k in range(len(list)):
+    node3 = Node.Node(cell3)
+    node3.fake_f = 3
+    node3.fake_h = 5
+    node3.direction_value = 2
 
-        # index på element i listan
-        index = cols * current_row
+    node4 = Node.Node(cell3)
+    node4.fake_f = 1
+    node4.fake_h = 6
+    node4.direction_value = 2
 
-        # flytta vänster 1 pga nollindexering + 1 till för varje redan tillagt element
-        number = list[index - move_left]
+    test_list.append([node2, node2.fake_f, node2.fake_h, node2.direction_value])
+    test_list.append([node1, node1.fake_f, node1.fake_h, node1.direction_value])
+    test_list.append([node3, node3.fake_f, node3.fake_h, node3.direction_value])
 
-        matrix[row][col] = number
+    print(test_list)
 
-        # flytta ner en rad
-        row = row + 1
+    test_list.sort(key=itemgetter(1))
 
-        # om vi når botten av matrisen, flytta upp till toppen igen
-        if row > rows - 1:
-            row = 0
-            current_row = current_row + 1
-            col = col + 1
-            # om
-            if col > cols - 1:
-                col = 0
+    print(test_list)
 
-            # byter vi rad ska denna nollställas
-            move_left = 0
+    test_list.sort(key=itemgetter(2))
 
-            # backa en gång för varje avklarat element
-        move_left = move_left + 1
+    print(test_list)
 
-    print(matrix)
+    pq = queue.PriorityQueue()
+    pq.put((node2.fake_f, node2.fake_h, node2.direction_value, node2))
+    pq.put((node4.fake_f, node4.fake_h, node4.direction_value, node4))
+    pq.put((node3.fake_f, node3.fake_h, node3.direction_value, node3))
+    pq.put((node1.fake_f, node1.fake_h, node1.direction_value, node1))
+
+
+    print(pq.get())
+
+    custom_list = CustomList.CustomList()
+
+    custom_list.add(node2)
+    custom_list.add(node1)
+
+    custom_list.add(node3)
+    custom_list.add(node4)
+
+    print(custom_list)

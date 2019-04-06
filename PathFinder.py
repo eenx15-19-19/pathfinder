@@ -43,27 +43,27 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
+        next_node = pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
 
-        target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
-        target_cell.f = sys.maxsize
+       # target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
+       # target_cell.f = sys.maxsize
 
-        for cell in available_cells:
+       # for cell in available_cells:
 
-            self.calc_f(cell)
+        #    self.calc_f(cell)
 
             # prioritera lägst f. Därefter prioritera icke visited om den tidigare valda cellen är visited.
-            if cell.f < target_cell.f:
-                target_cell = cell
-            elif cell.f == target_cell.f:
-                if not cell.visited and target_cell.visited:
-                    target_cell = cell
+        #    if cell.f < target_cell.f:
+        #        target_cell = cell
+        #    elif cell.f == target_cell.f:
+        #        if not cell.visited and target_cell.visited:
+        #            target_cell = cell
                 # kan vi hamna i fallet då f är lika och h är lika samtidigt?
 
-        direction = helper.get_direction(current_cell, target_cell)
+       # direction = helper.get_direction(current_cell, target_cell)
 
-        print('Direction: ' + str(direction))
-        return direction, target_cell    # 'N/S/W/E'
+        #print('Direction: ' + str(direction))
+        #return direction, target_cell    # 'N/S/W/E'
 
     def right_hand_rule(self, maze, robot):
         row = robot.current_pos_row

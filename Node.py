@@ -9,4 +9,14 @@ class Node(object):
         self.depth = None
         self.explored = False
         self.fake_f = sys.maxsize
+        self.fake_h = sys.maxsize
+        self.direction_value = 0
+
+    def __str__(self):
+        string = str(self.cell)
+        return string
+
+    def __repr__(self):
+        string = str(self.cell)
+        return string
 
