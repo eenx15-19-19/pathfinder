@@ -1,5 +1,5 @@
 import Node
-import Translation as translator
+from Translation import Translation
 from HelpFunctions import HelpFunctions
 import PathFinder
 import queue as q
@@ -7,7 +7,8 @@ import CustomList
 
 class PathBuilder:
 
-    def path_builder(self, maze, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells):
+    def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
+        
         list_cells.append(node.cell)
 
         helper = HelpFunctions()
@@ -34,14 +35,24 @@ class PathBuilder:
                     temp_node.depth = node.depth + 1
                     queue.put(temp_node)
 
-        else:
+        # om inte slutväg söks (end = false) läggs noden till i end_cells bara om den inte är besökt. Om vi söker
+        # slutväg (end = true) läggs alla noder till i end_cells
+        if (not end and not node.cell.visited) or end:
             pf.calc_h(maze, node.cell)
-            pf.calc_g(node.parent, node)
+
+            # roten har inte en förälder, ställer till problem om end = true
+            if node.parent:
+                pf.calc_g(node.parent, node)
+
+                translator = Translation()
+                direction = translator.change_direction_format(robot, helper.get_direction(node.parent.cell, node.cell), 'NSWE')
+            else:
+                direction = 'None'  # måste ha något värde, spelar ingen roll vad
 
             node.fake_f = node.cell.h + node.depth + node.cell.g
             node.fake_h = node.cell.h
 
-            direction = helper.get_direction(node.parent.cell, node.cell)   # direction från dess förälder till sig
+              # direction från dess förälder till sig
             # själv, dvs hur den behöver gå för att ta sig hit
 
             if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
@@ -56,7 +67,7 @@ class PathBuilder:
             return end_nodes
         else:
             next_node = queue.get()
-            return self.path_builder(maze, next_node, queue, end_nodes, list_cells)
+            return self.path_builder(maze, robot, next_node, queue, end_nodes, list_cells, end)
 
     def find_best(self, end_nodes):
 

@@ -21,6 +21,16 @@ class CustomList(object):
 
         return string
 
+    def cell_search(self, cell):
+        index = -1
+
+        for i in range(len(self.custom_list)):
+            if self.custom_list[i].cell == cell:
+                index = i
+                break
+
+        return index
+
     def bin_search(self, custom_list, node):
         lo = 0
         hi = len(custom_list)

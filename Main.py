@@ -1,3 +1,5 @@
+from typing import List, Union
+
 import Cell
 import Maze
 from PathFinder import PathFinder
@@ -59,13 +61,17 @@ class Main:
         # Vill loopa och anropa run_sim
         win = False
 
-        length = 0
+        length = 0  # debug
         while not win:
             instruction = self.run_sim(maze, robot)     # Används ej nu. Skickas annars till microkontroller
+
+            # för debuggning
             length = length + 1
             print('Steg tagna: ' + str(length))
-            if length == 67:
+            if length == 221:
                 print('nu börjar kaos')
+            # slut på för debuggning
+
             # Skicka instruktion till microkontroller
 
             # Kontrollera om vi är framme
@@ -73,22 +79,27 @@ class Main:
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
 
-        # Kan ta fram shortest_path mha detta tror jag. Ska jämföra med det vi får från vår förra funktion för detta
-        start_cell = maze.matrix[maze.start_row][maze.start_col]
-        start_node = Node.Node(start_cell)
+        # Letar väg från aktuell position till start
         builder = PathBuilder.PathBuilder()
         test_queue = queue.Queue()
         end_nodes = CustomList.CustomList()
         list_cells = []
-        end_nodes = builder.path_builder(maze, start_node, test_queue, end_nodes, list_cells)
-        goal = end_nodes.get_first()
+        end_cell: Cell.Cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
+        end_node = Node.Node(end_cell)
+
+        end_nodes = builder.path_builder(maze, robot, end_node, test_queue, end_nodes, list_cells, True)
+
+        start_cell = maze.matrix[maze.start_row][maze.start_col]
+        goal_index = end_nodes.cell_search(start_cell)
+
+        goal = end_nodes.custom_list[goal_index]
 
         path_list = builder.find_path(goal)
-        path_list.pop(0)
         path_list.reverse()
-        path_list.append(maze.matrix[robot.current_pos_row][robot.current_pos_col])
 
-        print('Kortaste vägen är: ' + str(len(path_list)) + ' antal steg.')
+        print(path_list)
+        print('Kortaste vägen med pb är: ' + str(len(path_list)) + ' antal steg.')
+
         if win:
             print('Enkelt')
 

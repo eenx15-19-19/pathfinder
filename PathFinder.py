@@ -26,7 +26,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = (abs(maze.end_row - row) + abs(maze.end_col - col))
+        cell.h = 0.2*(abs(maze.end_row - row) + abs(maze.end_col - col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -44,7 +44,7 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        end_nodes = pb.path_builder(maze, current_node, queue, end_nodes, list_cells)
+        end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
         next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
@@ -120,14 +120,16 @@ class PathFinder:
         direction, target_cell = self.astar(maze, robot)
 
         if target_cell.visited:
-            i = maze.shortest_path.index(target_cell)
-            del maze.shortest_path[i:len(maze.shortest_path)]
+            #i = maze.shortest_path.index(target_cell)
+            #del maze.shortest_path[i:len(maze.shortest_path)]
             robot.g = target_cell.g
             # hantera att cell är visited men inte med i listan
 
         cell = maze.matrix[target_cell.row][target_cell.col]
         cell.visited = True
+        robot.g = robot.g + 1
         self.set_g(robot, cell)
+
 
         maze.shortest_path.append(cell)
 
