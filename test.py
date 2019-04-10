@@ -17,12 +17,12 @@ class test:
     node1 = Node.Node(cell1)
     node1.fake_f = 4
     node1.fake_h = 2
-    node1.direction_value = 3
+    node1.direction_value = 2
 
     node2 = Node.Node(cell2)
     node2.fake_f = 4
-    node2.fake_h = 3
-    node2.direction_value = 6
+    node2.fake_h = 2
+    node2.direction_value = 2
 
     node3 = Node.Node(cell3)
     node3.fake_f = 4
@@ -32,7 +32,7 @@ class test:
     node4 = Node.Node(cell4)
     node4.fake_f = 4
     node4.fake_h = 3
-    node4.direction_value = 2
+    node4.direction_value = 6
 
     custom_list = CustomList.CustomList()
 

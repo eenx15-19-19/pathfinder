@@ -33,21 +33,25 @@ class CustomList(object):
 
     def get_index(self, custom_list, node):
         # sök på f
-        index_f = self.bin_search(custom_list, node, 0)
+        if len(custom_list) == 0:
+            return 0
 
+        index_f = self.bin_search(custom_list, node, 0)
         index = index_f
 
-        # sortera på h
-        sublist_f, list_index = self.get_sublist_f(custom_list, index, node)
-        index_h = self.bin_search(sublist_f, node, 1)
+        if custom_list[index].fake_f == node.fake_f:
+            # sortera på h
+            sublist_f, list_index = self.get_sublist_f(custom_list, index, node)
+            index_h = self.bin_search(sublist_f, node, 1)
 
-        index = list_index + index_h
+            index = list_index + index_h
 
-        # sortera på direction
-        sublist_h, list_index = self.get_sublist_h(custom_list, index, node)
-        index_dir = self.bin_search(sublist_h, node, 2)
+            if custom_list[index].fake_h == node.fake_h:
+            # sortera på direction
+                sublist_h, list_index = self.get_sublist_h(custom_list, index, node)
+                index_dir = self.bin_search(sublist_h, node, 2)
 
-        index = list_index + index_dir
+                index = list_index + index_dir
 
         return index
 
@@ -58,6 +62,7 @@ class CustomList(object):
         sublist = []
 
         value = node.fake_f
+
         while hi < len(custom_list) - 1:
             if custom_list[hi + 1].fake_f == value:
                 hi = hi + 1
@@ -72,18 +77,19 @@ class CustomList(object):
 
         list_index = lo
 
-        if len(custom_list) != 0:
-            while lo <= hi:
-                sublist.append(custom_list[lo])
-                lo = lo + 1
+        while lo <= hi:
+            sublist.append(custom_list[lo])
+            lo = lo + 1
 
         return sublist, list_index
 
-    def get_sublist_h(self, custom_list, index, value):
+    def get_sublist_h(self, custom_list, index, node):
         lo = index
         hi = index
 
         sublist = []
+
+        value = node.fake_h
 
         while hi < len(custom_list) - 1:
             if custom_list[hi + 1].fake_h == value:
@@ -99,12 +105,12 @@ class CustomList(object):
 
         list_index = lo
 
-        if len(custom_list) != 0:
-            while lo <= hi:
-                sublist.append(custom_list[lo])
-                lo = lo + 1
+        while lo <= hi:
+            sublist.append(custom_list[lo])
+            lo = lo + 1
 
         return sublist, list_index
+
 
     def bin_search(self, custom_list, node, value_comp):
         lo = 0
