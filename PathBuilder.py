@@ -8,8 +8,9 @@ import CustomList
 class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
-        
-        list_cells.append(node.cell)
+
+        if node.cell.row == 13 and node.cell.col == 6:
+            print('hej')
 
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
@@ -34,6 +35,7 @@ class PathBuilder:
                     temp_node.parent = node
                     temp_node.depth = node.depth + 1
                     queue.put(temp_node)
+                    list_cells.append(temp_node.cell)
 
         # om inte slutväg söks (end = false) läggs noden till i end_cells bara om den inte är besökt. Om vi söker
         # slutväg (end = true) läggs alla noder till i end_cells

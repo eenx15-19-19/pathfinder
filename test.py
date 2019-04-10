@@ -25,37 +25,14 @@ class test:
     node2.direction_value = 6
 
     node3 = Node.Node(cell3)
-    node3.fake_f = 3
-    node3.fake_h = 5
+    node3.fake_f = 4
+    node3.fake_h = 2
     node3.direction_value = 2
 
-    node4 = Node.Node(cell3)
-    node4.fake_f = 1
-    node4.fake_h = 6
+    node4 = Node.Node(cell4)
+    node4.fake_f = 4
+    node4.fake_h = 3
     node4.direction_value = 2
-
-    test_list.append([node2, node2.fake_f, node2.fake_h, node2.direction_value])
-    test_list.append([node1, node1.fake_f, node1.fake_h, node1.direction_value])
-    test_list.append([node3, node3.fake_f, node3.fake_h, node3.direction_value])
-
-    print(test_list)
-
-    test_list.sort(key=itemgetter(1))
-
-    print(test_list)
-
-    test_list.sort(key=itemgetter(2))
-
-    print(test_list)
-
-    pq = queue.PriorityQueue()
-    pq.put((node2.fake_f, node2.fake_h, node2.direction_value, node2))
-    pq.put((node4.fake_f, node4.fake_h, node4.direction_value, node4))
-    pq.put((node3.fake_f, node3.fake_h, node3.direction_value, node3))
-    pq.put((node1.fake_f, node1.fake_h, node1.direction_value, node1))
-
-
-    print(pq.get())
 
     custom_list = CustomList.CustomList()
 
@@ -66,3 +43,4 @@ class test:
     custom_list.add(node4)
 
     print(custom_list)
+
