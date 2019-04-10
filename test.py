@@ -9,10 +9,10 @@ class test:
 
     test_list = []
     helper = HelpFunctions()
-    cell1 = Cell.Cell(helper.split_walls('0000'), 0, 0)
-    cell2 = Cell.Cell(helper.split_walls('0100'), 1, 1)
-    cell3 = Cell.Cell(helper.split_walls('1000'), 2, 2)
-    cell4 = Cell.Cell(helper.split_walls('1100'), 3, 3)
+    cell1 = Cell.Cell(helper.split_walls('0000'), 1, 1)
+    cell2 = Cell.Cell(helper.split_walls('0100'), 2, 2)
+    cell3 = Cell.Cell(helper.split_walls('1000'), 3, 3)
+    cell4 = Cell.Cell(helper.split_walls('1100'), 4, 4)
 
     node1 = Node.Node(cell1)
     node1.fake_f = 4

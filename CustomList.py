@@ -33,19 +33,19 @@ class CustomList(object):
 
     def get_index(self, custom_list, node):
         # sök på f
-        index_f = self.bin_search(custom_list, node)
+        index_f = self.bin_search(custom_list, node, 0)
 
         index = index_f
 
         # sortera på h
         sublist_f, list_index = self.get_sublist_f(custom_list, index, node)
-        index_h = self.bin_search(sublist_f, node)
+        index_h = self.bin_search(sublist_f, node, 1)
 
         index = list_index + index_h
 
         # sortera på direction
         sublist_h, list_index = self.get_sublist_h(custom_list, index, node)
-        index_dir = self.bin_search(sublist_h, node)
+        index_dir = self.bin_search(sublist_h, node, 2)
 
         index = list_index + index_dir
 
@@ -55,7 +55,7 @@ class CustomList(object):
         lo = index
         hi = index
 
-        sublist = self.custom_list
+        sublist = []
 
         value = node.fake_f
         while hi < len(custom_list) - 1:
@@ -83,7 +83,7 @@ class CustomList(object):
         lo = index
         hi = index
 
-        sublist = self.custom_list
+        sublist = []
 
         while hi < len(custom_list) - 1:
             if custom_list[hi + 1].fake_h == value:
@@ -106,19 +106,30 @@ class CustomList(object):
 
         return sublist, list_index
 
-    def bin_search(self, custom_list, node):
+    def bin_search(self, custom_list, node, value_comp):
         lo = 0
         hi = len(custom_list)
         mid = (lo + hi)//2  # // är för floored integer division
 
-        value = node.fake_f     # börja med att jämföra f
-        value_comp = 0      # räknar vilken sak vi jämför (f, h, direction)
+        if value_comp == 0:
+            value = node.fake_f     # börja med att jämföra f
+        elif value_comp == 1:
+            value = node.fake_h
+        elif value_comp == 2:
+            value = node.direction_value
+        else:
+            value = 0
 
         other_value = 0     # måste ha ett initialt värde, ändras i while-loopen sen. Kan inte sätta
                             # custom_list[mid].fake_f pga kaos om listan är tom
         while hi != lo:
+
             if value_comp == 0:
                 other_value = custom_list[mid].fake_f
+            elif value_comp == 1:
+                other_value = custom_list[mid].fake_h
+            elif value_comp == 2:
+                other_value = custom_list[mid].direction_value
 
             if value < other_value:
                 hi = mid
