@@ -39,19 +39,21 @@ class CustomList(object):
         index_f = self.bin_search(custom_list, node, 0)
         index = index_f
 
-        if custom_list[index].fake_f == node.fake_f:
-            # sortera på h
-            sublist_f, list_index = self.get_sublist_f(custom_list, index, node)
-            index_h = self.bin_search(sublist_f, node, 1)
+        if index != len(custom_list):
+            if custom_list[index].fake_f == node.fake_f:
+                # sortera på h
+                sublist_f, list_index = self.get_sublist_f(custom_list, index, node)
+                index_h = self.bin_search(sublist_f, node, 1)
 
-            index = list_index + index_h
+                index = list_index + index_h
 
-            if custom_list[index].fake_h == node.fake_h:
-            # sortera på direction
-                sublist_h, list_index = self.get_sublist_h(custom_list, index, node)
-                index_dir = self.bin_search(sublist_h, node, 2)
+                if index != len(custom_list):
+                    if custom_list[index].fake_h == node.fake_h:
+                    # sortera på direction
+                        sublist_h, list_index = self.get_sublist_h(custom_list, index, node)
+                        index_dir = self.bin_search(sublist_h, node, 2)
 
-                index = list_index + index_dir
+                        index = list_index + index_dir
 
         return index
 
