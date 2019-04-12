@@ -68,7 +68,7 @@ class Main:
             # för debuggning
             length = length + 1
             print('Steg tagna: ' + str(length))
-            if length == 16:
+            if length == 490:
                 print('nu börjar kaos')
             # slut på för debuggning
 

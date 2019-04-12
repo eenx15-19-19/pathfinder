@@ -60,6 +60,7 @@ class PathBuilder:
             path_list = []
             current_node = node
 
+            # lista från noden vi tittar på till där roboten står
             for i in range(current_node.depth):
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
