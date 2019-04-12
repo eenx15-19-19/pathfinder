@@ -107,3 +107,12 @@ class PathBuilder:
             prev_node = prev_node.parent
 
         return path_list
+
+    def manhattan_list_gen(self, maze, cell, end_node: Node.Node):
+        manhattan_list = []
+        for i in range(end_node.cell.row, maze.end_row):
+            for j in range(end_node.cell.col, maze.end_col):
+                if not end_node.cell.row < i < maze.end_row:
+                    if not end_node.cell.col < j < maze.end_col:
+                        manhattan_list.append(cell[i][j])
+        return manhattan_list
