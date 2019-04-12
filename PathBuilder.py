@@ -46,13 +46,19 @@ class PathBuilder:
             if node.parent:
                 pf.calc_g(node.parent, node)
 
+                current_node = node
+
+                for i in range(current_node.depth - 1):
+                    current_node = current_node.parent
+
                 translator = Translation()
-                direction = translator.change_direction_format(robot, helper.get_direction(node.parent.cell, node.cell), 'NSWE')
+                direction = translator.change_direction_format(robot, helper.get_direction(
+                    current_node.cell, current_node.parent.cell), 'NSWE')
             else:
                 direction = 'None'  # måste ha något värde, spelar ingen roll vad
 
-            node.fake_f = node.cell.h + node.depth + node.cell.g
-            node.fake_h = node.cell.h
+            node.fake_h = node.cell.h + node.depth
+            node.fake_f = node.fake_h + node.cell.g
 
               # direction från dess förälder till sig
             # själv, dvs hur den behöver gå för att ta sig hit
