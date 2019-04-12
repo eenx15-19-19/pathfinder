@@ -53,20 +53,35 @@ class PathBuilder:
 
                 translator = Translation()
                 direction = translator.change_direction_format(robot, helper.get_direction(
-                    current_node.cell, current_node.parent.cell), 'NSWE')
+                    current_node.parent.cell, current_node.cell), 'NSWE')
             else:
                 direction = 'None'  # måste ha något värde, spelar ingen roll vad
+
+            path_list = []
+            current_node = node
+
+            for i in range(current_node.depth):
+                current_node = current_node.parent
+                path_list.append(current_node.cell)
+
+            manhattan_list = self.manhattan_list_gen(maze, node)
+
+            crossing_cells = list(set(path_list).intersection(manhattan_list))
+            print(crossing_cells)
 
             node.fake_h = node.cell.h + node.depth
             node.fake_f = node.fake_h + node.cell.g
 
-              # direction från dess förälder till sig
+            # direction från dess förälder till sig
             # själv, dvs hur den behöver gå för att ta sig hit
 
             if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
                 node.direction_value = 0
+                maze.countA = maze.countA + 1
+
             else:
                 node.direction_value = 1
+                maze.countOther = maze.countOther + 1
 
             end_nodes.add(node)     # knasar något så kolla om
             # depth ska adderas såhär på g
@@ -98,11 +113,11 @@ class PathBuilder:
 
         return path_list
 
-    def manhattan_list_gen(self, maze, cell, end_node: Node.Node):
+    def manhattan_list_gen(self, maze, end_node: Node.Node):
         manhattan_list = []
         for i in range(end_node.cell.row, maze.end_row):
             for j in range(end_node.cell.col, maze.end_col):
                 if not end_node.cell.row < i < maze.end_row:
                     if not end_node.cell.col < j < maze.end_col:
-                        manhattan_list.append(cell[i][j])
+                        manhattan_list.append(maze.matrix[i][j])
         return manhattan_list

@@ -26,7 +26,7 @@ class PathFinder:
     def calc_h(self, maze, cell):
         row = cell.row
         col = cell.col
-        cell.h = 1*(abs(maze.end_row - row) + abs(maze.end_col - col))
+        cell.h = 0.1*(abs(maze.end_row - row) + abs(maze.end_col - col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
