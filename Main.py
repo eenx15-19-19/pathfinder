@@ -100,6 +100,7 @@ class Main:
         print(path_list)
         print('Kortaste vägen med pb är: ' + str(len(path_list)) + ' antal steg.')
 
+        print('CountA: ' + str(maze.countA) + ' . CountOther: ' + str(maze.countOther))
         if win:
             print('Enkelt')
 

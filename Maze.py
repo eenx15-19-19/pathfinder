@@ -8,7 +8,8 @@ class Maze(object):
         self.cols = cols
         self.start_col = 0
         self.start_row = rows - 1
-
+        self.countA = 0
+        self.countOther = 0
         # lösningen placerad i övre högre hörnet
         self.end_row = 7
         self.end_col = 8
