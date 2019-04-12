@@ -67,7 +67,7 @@ class PathBuilder:
             manhattan_list = self.manhattan_list_gen(maze, node)
 
             crossing_cells = list(set(path_list).intersection(manhattan_list))
-            print(crossing_cells)
+            print(path_list)
 
             node.fake_h = node.cell.h + node.depth
             node.fake_f = node.fake_h + node.cell.g
@@ -115,9 +115,17 @@ class PathBuilder:
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
         manhattan_list = []
-        for i in range(end_node.cell.row, maze.end_row):
-            for j in range(end_node.cell.col, maze.end_col):
-                if not end_node.cell.row < i < maze.end_row:
-                    if not end_node.cell.col < j < maze.end_col:
-                        manhattan_list.append(maze.matrix[i][j])
+        if end_node.cell.row - maze.end_row < 0:
+            i_step = 1
+        else:
+            i_step = -1
+
+        if end_node.cell.col - maze.end_col < 0:
+            j_step = 1
+        else:
+            j_step = -1
+        for i in range(end_node.cell.row, maze.end_row+i_step, i_step):
+            for j in range(end_node.cell.col, maze.end_col+j_step, j_step):
+                if i == end_node.cell.row or i == maze.end_row or j == end_node.cell.col or j == maze.end_col:
+                    manhattan_list.append(maze.matrix[i][j])
         return manhattan_list
