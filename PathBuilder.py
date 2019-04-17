@@ -9,8 +9,8 @@ class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
 
-        if node.cell not in list_cells:
-            list_cells.append(node.cell)
+        #if node.cell not in list_cells:
+        #    list_cells.append(node.cell)
 
         if node.cell.row == 14 and node.cell.col == 0:
             print('hej')
@@ -64,7 +64,7 @@ class PathBuilder:
             current_node = node
 
             # lista från noden vi tittar på till där roboten står
-            for i in range(current_node.depth - 1):
+            for i in range(current_node.depth):
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
 
@@ -73,6 +73,18 @@ class PathBuilder:
             crossing_cells1 = list(set(path_list).intersection(manhattan_list1))
             crossing_cells2 = list(set(path_list).intersection(manhattan_list2))
 
+            # crossing_cells1 = False
+            # crossing_cells2 = False
+
+            #   for i in range(len(manhattan_list1)):
+            #       if manhattan_list1[i].visited == True:
+            #           crossing_cells1 = True
+
+            #   for i in range(len(manhattan_list2)):
+            #       if manhattan_list2[i].visited == True:
+            #           crossing_cells2 = True
+
+            #   if not crossing_cells1 or not crossing_cells2:
             if len(crossing_cells1) == 0 or len(crossing_cells2) == 0:
                 #print(path_list)
 
