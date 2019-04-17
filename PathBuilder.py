@@ -64,10 +64,10 @@ class PathBuilder:
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
 
-            manhattan_list = self.manhattan_list_gen(maze, node)
+            manhattan_list1, manhattan_list2 = self.manhattan_list_gen(maze, node)
 
-            crossing_cells1 = list(set(path_list).intersection(manhattan_list[0]))
-            crossing_cells2 = list(set(path_list).intersection(manhattan_list[1]))
+            crossing_cells1 = list(set(path_list).intersection(manhattan_list1))
+            crossing_cells2 = list(set(path_list).intersection(manhattan_list2))
 
             if len(crossing_cells1) == 0 or len(crossing_cells2) == 0:
                 #print(path_list)
@@ -140,4 +140,4 @@ class PathBuilder:
 
         manhattan_list.append(list_list1)
         manhattan_list.append(list_list2)
-        return manhattan_list
+        return list_list1, list_list2
