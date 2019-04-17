@@ -135,8 +135,8 @@ class PathBuilder:
             list_list2.append(maze.matrix[i][maze.end_col])
 
         for j in range(end_node.cell.col, maze.end_col + j_step, j_step):
-            list_list1.append(maze.matrix[end_node.cell.row][j])
-            list_list2.append(maze.matrix[maze.end_row][j])
+            list_list2.append(maze.matrix[end_node.cell.row][j])
+            list_list1.append(maze.matrix[maze.end_row][j])
 
         manhattan_list.append(list_list1)
         manhattan_list.append(list_list2)
