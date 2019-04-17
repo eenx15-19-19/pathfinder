@@ -60,7 +60,7 @@ class PathBuilder:
             path_list = []
             current_node = node
 
-            for i in range(current_node.depth-1):
+            for i in range(current_node.depth):
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
 
@@ -117,7 +117,6 @@ class PathBuilder:
         return path_list
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
-        manhattan_list = []
         list_list1 = []
         list_list2 = []
         if end_node.cell.row - maze.end_row < 0:
@@ -138,6 +137,4 @@ class PathBuilder:
             list_list2.append(maze.matrix[end_node.cell.row][j])
             list_list1.append(maze.matrix[maze.end_row][j])
 
-        manhattan_list.append(list_list1)
-        manhattan_list.append(list_list2)
         return list_list1, list_list2
