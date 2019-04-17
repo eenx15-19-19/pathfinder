@@ -60,31 +60,34 @@ class PathBuilder:
             path_list = []
             current_node = node
 
-            for i in range(current_node.depth):
+            for i in range(current_node.depth-1):
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
 
             manhattan_list = self.manhattan_list_gen(maze, node)
 
-            crossing_cells = list(set(path_list).intersection(manhattan_list))
-            print(path_list)
+            crossing_cells1 = list(set(path_list).intersection(manhattan_list[0]))
+            crossing_cells2 = list(set(path_list).intersection(manhattan_list[1]))
 
-            node.fake_h = node.cell.h + node.depth
-            node.fake_f = node.fake_h + node.cell.g
+            if len(crossing_cells1) == 0 or len(crossing_cells2) == 0:
+                #print(path_list)
 
-            # direction från dess förälder till sig
-            # själv, dvs hur den behöver gå för att ta sig hit
+                node.fake_h = node.cell.h + node.depth
+                node.fake_f = node.fake_h + node.cell.g
 
-            if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
-                node.direction_value = 0
-                maze.countA = maze.countA + 1
+                # direction från dess förälder till sig
+                # själv, dvs hur den behöver gå för att ta sig hit
 
-            else:
-                node.direction_value = 1
-                maze.countOther = maze.countOther + 1
+                if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
+                    node.direction_value = 0
+                    maze.countA = maze.countA + 1
 
-            end_nodes.add(node)     # knasar något så kolla om
-            # depth ska adderas såhär på g
+                else:
+                    node.direction_value = 1
+                    maze.countOther = maze.countOther + 1
+
+                end_nodes.add(node)     # knasar något så kolla om
+                # depth ska adderas såhär på g
 
         if queue.empty():
             return end_nodes
@@ -115,6 +118,8 @@ class PathBuilder:
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
         manhattan_list = []
+        list_list1 = []
+        list_list2 = []
         if end_node.cell.row - maze.end_row < 0:
             i_step = 1
         else:
@@ -124,8 +129,15 @@ class PathBuilder:
             j_step = 1
         else:
             j_step = -1
+
         for i in range(end_node.cell.row, maze.end_row+i_step, i_step):
-            for j in range(end_node.cell.col, maze.end_col+j_step, j_step):
-                if i == end_node.cell.row or i == maze.end_row or j == end_node.cell.col or j == maze.end_col:
-                    manhattan_list.append(maze.matrix[i][j])
+            list_list1.append(maze.matrix[i][end_node.cell.col])
+            list_list2.append(maze.matrix[i][maze.end_col])
+
+        for j in range(end_node.cell.col, maze.end_col + j_step, j_step):
+            list_list1.append(maze.matrix[end_node.cell.row][j])
+            list_list2.append(maze.matrix[maze.end_row][j])
+
+        manhattan_list.append(list_list1)
+        manhattan_list.append(list_list2)
         return manhattan_list
