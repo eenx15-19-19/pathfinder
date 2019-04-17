@@ -9,7 +9,10 @@ class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
 
-        if node.cell.row == 13 and node.cell.col == 6:
+        if node.cell not in list_cells:
+            list_cells.append(node.cell)
+
+        if node.cell.row == 14 and node.cell.col == 0:
             print('hej')
 
         helper = HelpFunctions()
@@ -61,20 +64,24 @@ class PathBuilder:
             current_node = node
 
             # lista från noden vi tittar på till där roboten står
-            for i in range(current_node.depth):
+            for i in range(current_node.depth - 1):
                 current_node = current_node.parent
                 path_list.append(current_node.cell)
 
             manhattan_list = self.manhattan_list_gen(maze, node)
 
+
             crossing_cells = list(set(path_list).intersection(manhattan_list))
-            print(path_list)
+            #if len(crossing_cells) == 0:
+            #print('node: ' + str(node))
+            #print('Path_list: ' + str(path_list))
+            #print('Manhattan_list: ' + str(manhattan_list))
 
             node.fake_h = node.cell.h + node.depth
             node.fake_f = node.fake_h + node.cell.g
 
-            # direction från dess förälder till sig
-            # själv, dvs hur den behöver gå för att ta sig hit
+                # direction från dess förälder till sig
+                # själv, dvs hur den behöver gå för att ta sig hit
 
             if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
                 node.direction_value = 0
@@ -85,7 +92,7 @@ class PathBuilder:
                 maze.countOther = maze.countOther + 1
 
             end_nodes.add(node)     # knasar något så kolla om
-            # depth ska adderas såhär på g
+                # depth ska adderas såhär på g
 
         if queue.empty():
             return end_nodes

@@ -45,6 +45,7 @@ class PathFinder:
 
         pb = PathBuilder()
         end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
+        print('end_nodes: ' + str(end_nodes))
         next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
