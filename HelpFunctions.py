@@ -43,6 +43,22 @@ class HelpFunctions:
 
         return maze.matrix[row][col]
 
+    def get_adjacent_cell_robot(self, maze, cell, direction):
+        row = cell.row
+        col = cell.col
+
+        if direction == 'N':
+            row = row - 1
+        elif direction == 'S':
+            row = row + 1
+        elif direction == 'W':
+            col = col - 1
+        elif direction == 'E':
+            col = col + 1
+        else:
+            None
+
+        return maze.matrix_robot[row][col]
     def get_direction(self, cell_start, cell_end):
         direction = ''
         if cell_end.row - cell_start.row < 0:

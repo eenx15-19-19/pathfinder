@@ -123,7 +123,7 @@ class Main:
         maze.path.append(helper.current_cell(robot, maze))
 
         print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
-        if robot.current_pos_row == 9 and robot.current_pos_col == 1:
+        if robot.current_pos_row == 7 and robot.current_pos_col == 1:
             print('hej')
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
 

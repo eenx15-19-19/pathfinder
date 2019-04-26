@@ -128,15 +128,12 @@ class PathFinder:
 
         cell = maze.matrix[target_cell.row][target_cell.col]
         cell.visited = True
+        maze.matrix_robot[target_cell.row][target_cell.col] = cell
         robot.g = robot.g + 1
         self.set_g(robot, cell)
-
 
         maze.shortest_path.append(cell)
 
         return direction
-
-
-
 
 

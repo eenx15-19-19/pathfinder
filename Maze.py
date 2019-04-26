@@ -1,5 +1,6 @@
 import Cell
 from MazeTransformer import MazeTransformer
+from HelpFunctions import HelpFunctions
 
 class Maze(object):
     # rows = antal rader, cols = antal kolonner
@@ -26,11 +27,25 @@ class Maze(object):
         # startnoden är besökt
         self.matrix[self.start_row][self.start_col].visited = True
 
-        # tillfällig matris för att spara f
-        self._matrix_f = [[0 for j in range(self.cols)] for i in range(self.rows)]
+        helper = HelpFunctions()
+        # matris för att spara det roboten har upptäckt
+        self._matrix_robot = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
         for i in range(self.rows):
             for j in range(self.cols):
-                self.matrix_f[i][j] = 0
+                self._matrix_robot[i][j] = Cell.Cell('0000', i, j)
+
+        self._matrix_robot[self.start_row][self.start_col] = self.matrix[self.start_row][self.start_col]
+
+        for i in range(15):
+            self._matrix_robot[i][0].walls = helper.split_walls('0010')
+            self._matrix_robot[i][15].walls = helper.split_walls('0001')
+            self._matrix_robot[0][i].walls = helper.split_walls('1000')
+            self._matrix_robot[15][i].walls = helper.split_walls('0100')
+
+        self._matrix_robot[0][0].walls = helper.split_walls('1010')
+        self._matrix_robot[0][15].walls = helper.split_walls('1001')
+        self._matrix_robot[15][0].walls = helper.split_walls('0110')
+        self._matrix_robot[15][15].walls = helper.split_walls('0101')
 
         # lista för shortest path
         self.shortest_path = [self.matrix[self.start_row][self.start_col]]
@@ -40,5 +55,5 @@ class Maze(object):
         return self._matrix
 
     @property
-    def matrix_f(self):
-        return self._matrix_f
+    def matrix_robot(self):
+        return self._matrix_robot
