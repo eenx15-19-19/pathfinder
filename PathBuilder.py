@@ -14,8 +14,8 @@ class PathBuilder:
         #if node.cell not in list_cells:
         #    list_cells.append(node.cell)
 
-        if node.cell.row == 15 and node.cell.col == 9:
-            print('hej')
+     #  if node.cell.row == 15 and node.cell.col == 9:
+     #       print('hej')
 
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
@@ -108,8 +108,8 @@ class PathBuilder:
                     node.direction_value = 1
                     maze.countOther = maze.countOther + 1
 
-                if node.cell.row == 15 and node.cell.col == 9:
-                    print('hej')
+             #   if node.cell.row == 15 and node.cell.col == 9:
+             #       print('hej')
                 end_nodes.add(node)     # knasar något så kolla om
                 # depth ska adderas såhär på g
 

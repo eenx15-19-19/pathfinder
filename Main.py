@@ -68,8 +68,8 @@ class Main:
             # för debuggning
             length = length + 1
             print('Steg tagna: ' + str(length))
-            if length == 490:
-                print('nu börjar kaos')
+          #  if length == 490:
+               # print('nu börjar kaos')
             # slut på för debuggning
 
             # Skicka instruktion till microkontroller
@@ -123,8 +123,8 @@ class Main:
         maze.path.append(helper.current_cell(robot, maze))
 
         print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
-        if robot.current_pos_row == 15 and robot.current_pos_col == 7:
-            print('hej')
+       # if robot.current_pos_row == 15 and robot.current_pos_col == 7:
+           # print('hej')
         instruction = translator.change_direction_format(robot, direction, 'NSWE')
 
         return instruction # Returnera instruktion

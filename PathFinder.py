@@ -44,8 +44,8 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        if current_cell.row == 8 and current_cell.col == 8:
-            print('hej')
+      # if current_cell.row == 8 and current_cell.col == 8:
+      #      print('hej')
         end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
         print('end_nodes: ' + str(end_nodes))
         next_node = pb.find_best(end_nodes)
