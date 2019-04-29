@@ -20,7 +20,10 @@ class CustomList(object):
         else:
             return False
 
-    def pop(self, index):
+    def pop_stack(self):
+        return self.custom_list.pop()
+
+    def pop_queue(self, index):
         return self.custom_list.pop(index)
 
     def __str__(self):

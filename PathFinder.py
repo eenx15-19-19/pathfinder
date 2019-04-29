@@ -8,6 +8,7 @@ import Node
 from PathBuilder import PathBuilder
 import queue as q
 import CustomList
+import time
 
 class PathFinder:
 
@@ -32,11 +33,10 @@ class PathFinder:
         cell.f = cell.g + cell.h
 
     def astar(self, maze, robot):   # Ska göras
+        t0 = time.time()
         helper = HelpFunctions()
 
         current_cell = helper.current_cell(robot, maze)
-
-        available_cells = []
 
         queue = q.Queue()
         end_nodes = CustomList.CustomList()
@@ -51,7 +51,9 @@ class PathFinder:
         next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
-
+        t1 = time.time()
+        astar_time = t1 - t0
+        print('A*-time = ' + str(astar_time))
         return direction, next_node.cell
 
        # target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)

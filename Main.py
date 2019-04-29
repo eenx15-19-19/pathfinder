@@ -13,11 +13,12 @@ import PathBuilder
 import Node
 import queue
 import CustomList
+import time
 
 class Main:
 
     def sim_pi(self):
-
+        t0 = time.time()
         finder = PathFinder()
         # Initiera maze och robot
 
@@ -78,6 +79,7 @@ class Main:
 
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
+                print('Win: ' + str(win))
 
         # Letar väg från aktuell position till start
         builder = PathBuilder.PathBuilder()
@@ -100,9 +102,12 @@ class Main:
         print(path_list)
         print('Kortaste vägen med pb är: ' + str(len(path_list)) + ' antal steg.')
 
-        print('CountA: ' + str(maze.countA) + ' . CountOther: ' + str(maze.countOther))
+       # print('CountA: ' + str(maze.countA) + ' . CountOther: ' + str(maze.countOther))
         if win:
             print('Enkelt')
+            t1 = time.time()
+            total_time = t1 - t0
+            print('Total time: ' + str(total_time))
 
         else:
             print('Svårt')

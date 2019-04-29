@@ -308,37 +308,16 @@ class PathBuilder:
         current_node = node
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
-
         NSWE = 'N', 'S', 'W', 'E'
-        # Problem: Kollar bara en väg. Om t.ex. första valet leder till ingen väg måste övriga vägar också kollas.
-        # Lista av listor i explored cells så vi sparar gamla queues? Måste göra en DFS. Återanvända mer från PB?
+
         fake_path = []
         explored_cells = []
-        explored_quad = []
         node_queue = CustomList.CustomList()
-
-        row_diff = abs(maze.end_row-node.cell.row)
-        col_diff = abs(maze.end_col-node.cell.col)
 
         while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
             #fake_path.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
             explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
 
-            if current_node.cell.row - maze.end_row < 0:
-                i_step = 1
-            elif current_node.cell.row - maze.end_row > 0:
-                i_step = -1
-            else:
-                i_step = 0
-
-            if current_node.cell.col - maze.end_col < 0:
-                j_step = 1
-            elif current_node.cell.col - maze.end_col > 0:
-                j_step = -1
-            else:
-                j_step = 0
-
-            available_cells = []
             walls = current_node.cell.walls
             for i in range(len(walls)):
                 wall = walls[i]
@@ -346,43 +325,40 @@ class PathBuilder:
                 if wall == '0':
                     direction = NSWE[i]
                     temp_cell = helper.get_adjacent_cell_robot(maze, current_node.cell, direction)
-                    if not temp_cell.visited:
-                        available_cells.append(temp_cell)
-                        if not temp_cell.visited and temp_cell not in explored_cells:
-                            temp_node = Node.Node(temp_cell)
-                            temp_node.parent = current_node
-                            temp_node.depth = temp_node.parent.depth + 1
+                    if not temp_cell.visited and temp_cell not in explored_cells:
+                        temp_node = Node.Node(temp_cell)
+                        temp_node.parent = current_node
+                        temp_node.depth = temp_node.parent.depth + 1
 
-                            #for i in range(temp_current_node.depth - 1):
-                            #    temp_current_node = temp_current_node.parent
-
-                            translator = Translation()
-                            direction = translator.change_direction_format(robot, helper.get_direction(
+                        translator = Translation()
+                        direction = translator.change_direction_format(robot, helper.get_direction(
                                 temp_node.parent.cell, temp_node.cell), 'NSWE')
 
-                            if direction == 'A':  # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
-                                temp_node.direction_value = 0
-                                maze.countA = maze.countA + 1
+                        if direction == 'A':  # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
+                            temp_node.direction_value = 0
+                            #maze.countA = maze.countA + 1
 
-                            else:
-                                temp_node.direction_value = 1
-                                maze.countOther = maze.countOther + 1
+                        else:
+                            temp_node.direction_value = 1
+                           # maze.countOther = maze.countOther + 1
 
-                            pf.calc_h(maze, temp_node.cell)
-                            temp_node.fake_h = temp_node.cell.h + temp_node.depth
-                            temp_node.fake_f = temp_node.fake_h + temp_node.cell.g
+                        pf.calc_h(maze, temp_node.cell)
+                        temp_node.fake_h = temp_node.cell.h + temp_node.depth
+                        temp_node.fake_f = temp_node.fake_h + temp_node.cell.g
 
-                            node_queue.add(temp_node)
+                        node_queue.add(temp_node)
 
             if node_queue.empty():
                 break
-            current_node = node_queue.pop(0)
-            #node_queue = CustomList.CustomList()
+            current_node = node_queue.pop_queue(0)
+            #print(current_node)
 
         fake_path.append(current_node.cell)
         for i in range(current_node.depth):
             current_node = current_node.parent
             fake_path.append(current_node.cell)
 
-        #fake_path.append(current_node.cell)
         return fake_path
+
+   # def DFS(self, maze, robot, node):
+
