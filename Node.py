@@ -7,7 +7,6 @@ class Node(object):
         self.cell = cell
         self.parent = None
         self.depth = 0
-        self.explored = False
         self.fake_f = sys.maxsize
         self.fake_h = sys.maxsize
         self.direction_value = 0

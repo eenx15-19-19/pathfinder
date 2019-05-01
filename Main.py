@@ -86,6 +86,7 @@ class Main:
         test_queue = queue.Queue()
         end_nodes = CustomList.CustomList()
         list_cells = []
+
         end_cell: Cell.Cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
         end_node = Node.Node(end_cell)
 

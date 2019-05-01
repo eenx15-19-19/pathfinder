@@ -59,6 +59,7 @@ class HelpFunctions:
             None
 
         return maze.matrix_robot[row][col]
+
     def get_direction(self, cell_start, cell_end):
         direction = ''
         if cell_end.row - cell_start.row < 0:
