@@ -103,6 +103,7 @@ class Main:
         print(path_list)
         print('Kortaste vägen med pb är: ' + str(len(path_list)) + ' antal steg.')
 
+       # print('CountA: ' + str(maze.countA) + ' . CountOther: ' + str(maze.countOther))
         if win:
             print('Enkelt')
             t1 = time.time()
@@ -125,12 +126,6 @@ class Main:
         # Uppdatera robot
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
-
-        if robot.current_pos_row < maze.explored_row:
-            maze.explored_row = robot.current_pos_row
-        if robot.current_pos_col > maze.explored_col:
-            maze.explored_col = robot.current_pos_col
-
         maze.path.append(helper.current_cell(robot, maze))
 
         print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
