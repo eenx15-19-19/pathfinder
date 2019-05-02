@@ -14,7 +14,7 @@ class PathFinder:
 
     # måste räkna medan den går, inte säkert att den tagit raka vägen
     def set_g(self, robot, cell):
-        cell.g = robot.g   # tror detta stämmer? det stämmer inte
+        cell.g = robot.g
 
     def calc_g(self, parent_node: Node.Node, child_node: Node.Node):
         child_node.cell.g = parent_node.cell.g + 1
@@ -22,7 +22,7 @@ class PathFinder:
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, cell):
-        cell.h = 1*(abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
+        cell.h = 10*(abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h

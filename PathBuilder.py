@@ -10,9 +10,9 @@ import CustomList
 class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
-        maze.count_pb = maze.count_pb + 1
-     #  if node.cell.row == 15 and node.cell.col == 9:
-     #       print('hej')
+
+        if node.cell.row == 13 and node.cell.col == 6:
+            print('hej')
 
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
@@ -43,7 +43,7 @@ class PathBuilder:
         # slutväg (end = true) läggs alla noder till i end_cells
         if (not end and not node.cell.visited) or end:
             pf.calc_h(maze, node.cell)
-            maze.count_unvisited = maze.count_unvisited + 1
+
             # roten har inte en förälder, ställer till problem om end = true
             if node.parent:
                 pf.calc_g(node.parent, node)
@@ -54,7 +54,7 @@ class PathBuilder:
                     current_node = current_node.parent
 
                 translator = Translation()
-                direction = translator.change_direction_format(robot, helper.get_direction(
+                direction = translator.change_direction_format(robot.current_direction, helper.get_direction(
                     current_node.parent.cell, current_node.cell), 'NSWE')
             else:
                 direction = 'None'  # måste ha något värde, spelar ingen roll vad
@@ -68,11 +68,11 @@ class PathBuilder:
             if fake_path[0].row < maze.explored_row and fake_path[0].col > maze.explored_col:
                 outside_explored_area = True
 
-            if not goal and not outside_explored_area:
-            #if maze.matrix_robot[maze.end_row][maze.end_col] not in fake_path and \
+            # med explored area: if not goal and not outside_explored_area:
+            # utan: if maze.matrix_robot[maze.end_row][maze.end_col] not in fake_path and \
              #       maze.matrix[maze.end_row][maze.end_col] not in fake_path:
-                print('Dead end!')
-            else:
+            #    print('Dead end!')
+            if goal or outside_explored_area:
                 node.fake_h = node.cell.h + node.depth
                 node.fake_f = node.fake_h + node.cell.g
 
@@ -89,10 +89,6 @@ class PathBuilder:
                 # depth ska adderas såhär på g
 
         if queue.empty():
-            print('Maze.count_unvisited: ' + str(maze.count_unvisited))
-            maze.count_unvisited = 0
-            print('Maze.count_pb: ' + str(maze.count_pb))
-            maze.count_pb = 0
             return end_nodes
         else:
             next_node = queue.get()
@@ -120,7 +116,6 @@ class PathBuilder:
         return path_list
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
-        manhattan_list = []
         list_list1 = []
         list_list2 = []
         if end_node.cell.row - maze.end_row < 0:
@@ -141,8 +136,6 @@ class PathBuilder:
             list_list2.append(maze.matrix[end_node.cell.row][j])
             list_list1.append(maze.matrix[maze.end_row][j])
 
-        manhattan_list.append(list_list1)
-        manhattan_list.append(list_list2)
         return list_list1, list_list2
 
     def construct_fake_path(self, maze, robot, node, end):
@@ -156,6 +149,7 @@ class PathBuilder:
         node_queue = CustomList.CustomList()
         continue_search = True
 
+        # med explored area ska detta ansvändas
         if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
             continue_search = False
         elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
@@ -163,12 +157,12 @@ class PathBuilder:
 
         explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
 
-        if node.cell.row == 15 and node.cell.col == 1:
-             print('1')
-
+        #med explored area ska detta användas
         while continue_search:
 
+        # utan explored area ska detta användas
         #while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
+
             #maze.count_fake = maze.count_fake + 1
 
             if maze.count_fake == 200:
@@ -253,6 +247,7 @@ class PathBuilder:
                 break
             current_node = node_queue.pop_queue(0)
 
+            # med explored area ska dessa loopar användas
             if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
                 continue_search = False
             elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
@@ -263,7 +258,7 @@ class PathBuilder:
             current_node = current_node.parent
             fake_path.append(current_node.cell)
 
-        print('Maze.count_fake: ' + str(maze.count_fake))
+        #print('Maze.count_fake: ' + str(maze.count_fake))
         maze.count_fake = 0
         return fake_path
 
