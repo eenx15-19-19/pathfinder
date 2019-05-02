@@ -3,7 +3,7 @@ class Translation:
     # current_type är antingen 'ABLR' eller 'NSWE'
     # skriv om den här snyggare!
     def change_wall_format(self, walls, current_direction, current_type):
-        # börja med NSWE till ABRL
+        # börja med NSWE till ABLR
         new_walls = ['', '', '', '']
         # peka norr. N = A, S = B, W = L, E = R
         if current_type == 'NSWE':
@@ -79,12 +79,12 @@ class Translation:
     # direction är sträng av en bokstav. current_format = 'ABLR' eller 'NSWE'
     # Skriv om bättre.
     # Borde gå att göra mycket bättre än hårdkodning
-    def change_direction_format(self, robot, direction, current_format):
+    def change_direction_format(self, current_direction, direction, current_format):
         new_direction = ''
 
         if current_format == 'ABLR':
 
-            if robot.current_direction == 'N':
+            if current_direction == 'N':
                 if direction == 'A':
                     new_direction = 'N'
                 elif direction == 'B':
@@ -95,7 +95,7 @@ class Translation:
                     new_direction = 'E'
                 else:
                     print('Error')
-            elif robot.current_direction == 'S':
+            elif current_direction == 'S':
                 if direction == 'A':
                     new_direction = 'S'
                 elif direction == 'B':
@@ -106,7 +106,7 @@ class Translation:
                     new_direction = 'W'
                 else:
                     print('Error')
-            elif robot.current_direction == 'W':
+            elif current_direction == 'W':
                 if direction == 'A':
                     new_direction = 'W'
                 elif direction == 'B':
@@ -117,7 +117,7 @@ class Translation:
                     new_direction = 'N'
                 else:
                     print('Error')
-            elif robot.current_direction == 'E':
+            elif current_direction == 'E':
                 if direction == 'A':
                     new_direction = 'E'
                 elif direction == 'B':
@@ -130,7 +130,7 @@ class Translation:
                     print('Error')
 
         elif current_format == 'NSWE':
-            if robot.current_direction == 'N':
+            if current_direction == 'N':
                 if direction == 'N':
                     new_direction = 'A'
                 elif direction == 'S':
@@ -141,7 +141,7 @@ class Translation:
                     new_direction = 'R'
                 else:
                     print('Error')
-            elif robot.current_direction == 'S':
+            elif current_direction == 'S':
                 if direction == 'N':
                     new_direction = 'B'
                 elif direction == 'S':
@@ -152,7 +152,7 @@ class Translation:
                     new_direction = 'L'
                 else:
                     print('Error')
-            elif robot.current_direction == 'W':
+            elif current_direction == 'W':
                 if direction == 'N':
                     new_direction = 'R'
                 elif direction == 'S':
@@ -163,7 +163,7 @@ class Translation:
                     new_direction = 'B'
                 else:
                     print('Error')
-            elif robot.current_direction == 'E':
+            elif current_direction == 'E':
                 if direction == 'N':
                     new_direction = 'L'
                 elif direction == 'S':
