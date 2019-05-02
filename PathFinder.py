@@ -106,7 +106,7 @@ class PathFinder:
             print('No direction without walls')
 
         print('Direction: ' + direction)
-        direction = translator.change_direction_format(robot, direction, 'ABLR')
+        direction = translator.change_direction_format(robot.current_direction, direction, 'ABLR')
         robot.current_direction = direction
         print('New Direction: ' + direction)
 

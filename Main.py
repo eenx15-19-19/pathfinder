@@ -3,7 +3,7 @@ from typing import List, Union
 import Cell
 import Maze
 from PathFinder import PathFinder
-from HelpFunctions import HelpFunctions
+import HelpFunctions
 from Translation import Translation
 import Robot
 import RobotContact
@@ -15,6 +15,60 @@ import queue
 import CustomList
 
 class Main:
+
+    def pi_pi(self):
+        finder = PathFinder()
+        builder = PathBuilder.PathBuilder()
+        helper = HelpFunctions.HelpFunctions()
+        # Initiera maze och robot
+
+        maze = Maze.Maze(16, 16)
+        for i in range(maze.rows):
+            for j in range(maze.cols):
+                finder.calc_h(maze, maze.matrix[i][j])
+
+        robot = Robot.Robot(maze)
+
+        win = False
+
+        while not win:
+            instruction = self.run_sim(maze, robot)  # Används ej nu. Skickas annars till microkontroller
+
+            # Skicka instruktion till microkontroller
+            # anropa skickametod(allt som är bra att ha här i, instruction)
+
+            # Kontrollera om vi är framme
+
+            if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
+                win = True
+
+        # Letar väg från aktuell position till start
+
+        test_queue = queue.Queue()
+        end_nodes = CustomList.CustomList()
+        list_cells = []
+        end_cell: Cell.Cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
+        end_node = Node.Node(end_cell)
+        instruction_final = []
+        direction_final = ['N']
+
+        end_nodes = builder.path_builder(maze, robot, end_node, test_queue, end_nodes, list_cells, True)
+
+        start_cell = maze.matrix[maze.start_row][maze.start_col]
+        goal_index = end_nodes.cell_search(start_cell)
+        goal = end_nodes.custom_list[goal_index]
+
+        path_list = builder.find_path(goal)
+        path_list.reverse()
+
+        for i in range(len(path_list)-1):
+            current_cell = path_list[i]
+            next_cell = path_list[i+1]
+            direction_final.append(helper.get_direction(current_cell, next_cell))
+            robot_direction = direction_final[i]
+            direction = direction_final[i+1]
+            instruction_final.append(Translation.change_direction_format(robot_direction, direction, "NSWE"))
+        # Send instruction_final to robot
 
     def sim_pi(self):
 
@@ -123,17 +177,20 @@ class Main:
         maze.path.append(helper.current_cell(robot, maze))
 
         print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
-        instruction = translator.change_direction_format(robot, direction, 'NSWE')
+        instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
 
-        return instruction # Returnera instruktion
+        return instruction  # Returnera instruktion
 
     def run(self, maze, robot, sensor_data):    # Vill ha data från sensorer
-        # Från robot: få information om väggar
-        # Uppdatera cell.wall i maze
 
         finder = PathFinder()
         translator = Translation()
         helper = HelpFunctions()
+
+        # Från robot: få information om väggar
+        current_walls = sensor_data
+        # Uppdatera cell.wall i maze
+        maze.matrix[robot.current_pos_row][robot.current_pos_col].walls = translator.change_wall_format(current_walls, robot.current_direction, 'ABLR')
 
         direction = finder.run_pathfinder(maze, robot)      # NSWE
 
@@ -141,7 +198,7 @@ class Main:
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
 
-        instruction = translator.change_direction_format(robot, direction, 'NSWE')
+        instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
         return instruction # Returnera instruktion
 
 

@@ -52,7 +52,7 @@ class PathBuilder:
                     current_node = current_node.parent
 
                 translator = Translation()
-                direction = translator.change_direction_format(robot, helper.get_direction(
+                direction = translator.change_direction_format(robot.current_direction, helper.get_direction(
                     current_node.parent.cell, current_node.cell), 'NSWE')
             else:
                 direction = 'None'  # måste ha något värde, spelar ingen roll vad
