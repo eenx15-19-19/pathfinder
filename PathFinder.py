@@ -23,7 +23,7 @@ class PathFinder:
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, cell):
-        cell.h = 10 * (abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
+        cell.h = 1 * (abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
@@ -40,8 +40,6 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        if current_cell.row == 6 and current_cell.col == 2:
-            print('hej')
         end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
         # print('end_nodes: ' + str(end_nodes))
         next_node = pb.find_best(end_nodes)

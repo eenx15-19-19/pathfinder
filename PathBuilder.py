@@ -11,9 +11,6 @@ class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
 
-        if node.cell.row == 13 and node.cell.col == 6:
-            print('hej')
-
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
 

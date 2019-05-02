@@ -103,7 +103,7 @@ class Main:
 
             # för debuggning
             length = length + 1
-            #print('Steg tagna: ' + str(length))
+            print('Steg tagna: ' + str(length))
             if length == 16:
                 print('nu börjar kaos')
             # slut på för debuggning
@@ -133,7 +133,7 @@ class Main:
 
         #print(path_list)
         #print(instructions_2)
-        #print('Kortaste vägen med pb är: ' + str(len(path_list)) + ' antal steg.')
+        print('Kortaste vägen med pb är: ' + str(len(instructions)) + ' antal steg.')
 
         if win:
             print('Enkelt')
