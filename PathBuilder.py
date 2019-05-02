@@ -162,13 +162,18 @@ class PathBuilder:
         #    continue_search = False
 
         #while continue_search:
+        explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
+
+        if node.cell.row == 15 and node.cell.col == 1:
+            print('1')
 
         while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
             maze.count_fake = maze.count_fake + 1
-            if maze.count_fake == 2000:
+
+            if maze.count_fake == 200:
                 print('So much fake')
 
-            explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
+
 
             walls = current_node.cell.walls
             for i in range(len(walls)):
@@ -179,19 +184,50 @@ class PathBuilder:
                     temp_cell = helper.get_adjacent_cell_robot(maze, current_node.cell, direction)
                     add = True
                     if end:
-                       # for j in range(len(explored_cells)):
-                       #     if explored_cells[j].row == temp_cell.row and explored_cells[j].col == temp_cell.col:
-                       #         add = False
-                        if not temp_cell not in explored_cells:
-                            add = True
+                        visited = False
+                        if temp_cell.visited:
+                            visited = True
+
+                        if visited:
+                            for j in range(len(explored_cells)):
+                                if explored_cells[j].row == temp_cell.row and explored_cells[j].col == temp_cell.col:
+                                    add = False
+                                    break
+                                else:
+                                    add = True
+
+                        else:
+                            add = False
+                        #if not temp_cell not in explored_cells:
+                        #    add = True
                     else:
+                        visited = False
+                        if temp_cell.visited:
+                            visited = True
+
+                        explored = False
+
+                        if not visited:
+                            for k in range(len(explored_cells)):
+                                if explored_cells[k].row == temp_cell.row and explored_cells[k].col == temp_cell.col:
+                                    explored = True
+                                    break
+                                else:
+                                    explored = False
+
+                        if not explored and not visited:
+                            add = True
+                        else:
+                            add = False
+
                        # if not temp_cell.visited:
                        #     for k in range(len(explored_cells)):
                        #         if explored_cells[k].row == temp_cell.row and explored_cells[k].col == temp_cell.col:
                        #             add = False
-
-                        if not temp_cell.visited and temp_cell not in explored_cells:
-                            add = True
+                       # else:
+                       #     add = False
+                       # if not temp_cell.visited and temp_cell not in explored_cells:
+                       #     add = True
                     if add:
                         temp_node = Node.Node(temp_cell)
                         temp_node.parent = current_node
@@ -211,6 +247,7 @@ class PathBuilder:
                         temp_node.fake_h = temp_node.cell.h + temp_node.depth
                         temp_node.fake_f = temp_node.fake_h + temp_node.cell.g
 
+                        explored_cells.append(maze.matrix_robot[temp_node.cell.row][temp_node.cell.col])
                         node_queue.add(temp_node)
 
             if node_queue.empty():
