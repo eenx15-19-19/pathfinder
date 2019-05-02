@@ -44,7 +44,7 @@ class Maze(object):
 
         self._matrix_robot[0][0].walls = helper.split_walls('1010')
         self._matrix_robot[0][15].walls = helper.split_walls('1001')
-        self._matrix_robot[15][0].walls = helper.split_walls('0110')
+        self._matrix_robot[15][0].walls = helper.split_walls('0111')
         self._matrix_robot[15][15].walls = helper.split_walls('0101')
 
         # lista för shortest path
