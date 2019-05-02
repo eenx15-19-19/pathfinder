@@ -14,6 +14,18 @@ class CustomList(object):
     def get_first(self):
         return self.custom_list[0]
 
+    def empty(self):
+        if len(self.custom_list) == 0:
+            return True
+        else:
+            return False
+
+    def pop_stack(self):
+        return self.custom_list.pop()
+
+    def pop_queue(self, index):
+        return self.custom_list.pop(index)
+
     def __str__(self):
         string = ''
         for i in range(len(self.custom_list)):

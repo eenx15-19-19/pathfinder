@@ -55,7 +55,7 @@ class MazeTransformer:
     def get_matrix(self):
         translator = Translation()
 
-        f = open("5x5.c", "r")
+        f = open("boston.c", "r")
         whole = f.read()
         hextype = whole[-1577:-26]
         elements_list = []

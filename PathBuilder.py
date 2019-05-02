@@ -1,3 +1,5 @@
+from typing import List, Any
+
 import Node
 from Translation import Translation
 from HelpFunctions import HelpFunctions
@@ -8,9 +10,9 @@ import CustomList
 class PathBuilder:
 
     def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
-
-        if node.cell.row == 13 and node.cell.col == 6:
-            print('hej')
+        maze.count_pb = maze.count_pb + 1
+     #  if node.cell.row == 15 and node.cell.col == 9:
+     #       print('hej')
 
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
@@ -41,7 +43,7 @@ class PathBuilder:
         # slutväg (end = true) läggs alla noder till i end_cells
         if (not end and not node.cell.visited) or end:
             pf.calc_h(maze, node.cell)
-
+            maze.count_unvisited = maze.count_unvisited + 1
             # roten har inte en förälder, ställer till problem om end = true
             if node.parent:
                 pf.calc_g(node.parent, node)
@@ -52,26 +54,25 @@ class PathBuilder:
                     current_node = current_node.parent
 
                 translator = Translation()
-                direction = translator.change_direction_format(robot.current_direction, helper.get_direction(
+                direction = translator.change_direction_format(robot, helper.get_direction(
                     current_node.parent.cell, current_node.cell), 'NSWE')
             else:
                 direction = 'None'  # måste ha något värde, spelar ingen roll vad
+            fake_path = self.construct_fake_path(maze, robot, node, end)
 
-            path_list = []
-            current_node = node
+            goal = False
+            outside_explored_area = False
+            if (maze.matrix_robot[maze.end_row][maze.end_col] in fake_path or
+                    maze.matrix[maze.end_row][maze.end_col] in fake_path):
+                goal = True
+            if fake_path[0].row < maze.explored_row and fake_path[0].col > maze.explored_col:
+                outside_explored_area = True
 
-            for i in range(current_node.depth):
-                current_node = current_node.parent
-                path_list.append(current_node.cell)
-
-            manhattan_list1, manhattan_list2 = self.manhattan_list_gen(maze, node)
-
-            crossing_cells1 = list(set(path_list).intersection(manhattan_list1))
-            crossing_cells2 = list(set(path_list).intersection(manhattan_list2))
-
-            if len(crossing_cells1) == 0 or len(crossing_cells2) == 0:
-                #print(path_list)
-
+            if not goal and not outside_explored_area:
+            #if maze.matrix_robot[maze.end_row][maze.end_col] not in fake_path and \
+             #       maze.matrix[maze.end_row][maze.end_col] not in fake_path:
+                print('Dead end!')
+            else:
                 node.fake_h = node.cell.h + node.depth
                 node.fake_f = node.fake_h + node.cell.g
 
@@ -80,16 +81,18 @@ class PathBuilder:
 
                 if direction == 'A':    # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
                     node.direction_value = 0
-                    maze.countA = maze.countA + 1
 
                 else:
                     node.direction_value = 1
-                    maze.countOther = maze.countOther + 1
 
                 end_nodes.add(node)     # knasar något så kolla om
                 # depth ska adderas såhär på g
 
         if queue.empty():
+            print('Maze.count_unvisited: ' + str(maze.count_unvisited))
+            maze.count_unvisited = 0
+            print('Maze.count_pb: ' + str(maze.count_pb))
+            maze.count_pb = 0
             return end_nodes
         else:
             next_node = queue.get()
@@ -117,6 +120,7 @@ class PathBuilder:
         return path_list
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
+        manhattan_list = []
         list_list1 = []
         list_list2 = []
         if end_node.cell.row - maze.end_row < 0:
@@ -137,4 +141,129 @@ class PathBuilder:
             list_list2.append(maze.matrix[end_node.cell.row][j])
             list_list1.append(maze.matrix[maze.end_row][j])
 
+        manhattan_list.append(list_list1)
+        manhattan_list.append(list_list2)
         return list_list1, list_list2
+
+    def construct_fake_path(self, maze, robot, node, end):
+        current_node = node
+        helper = HelpFunctions()
+        pf = PathFinder.PathFinder()
+        NSWE = 'N', 'S', 'W', 'E'
+
+        fake_path = []
+        explored_cells = []
+        node_queue = CustomList.CustomList()
+        continue_search = True
+
+        if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
+            continue_search = False
+        elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
+            continue_search = False
+
+        explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
+
+        if node.cell.row == 15 and node.cell.col == 1:
+             print('1')
+
+        while continue_search:
+
+        #while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
+            #maze.count_fake = maze.count_fake + 1
+
+            if maze.count_fake == 200:
+                print('So much fake')
+
+            walls = current_node.cell.walls
+            for i in range(len(walls)):
+                wall = walls[i]
+
+                if wall == '0':
+                    direction = NSWE[i]
+                    temp_cell = helper.get_adjacent_cell_robot(maze, current_node.cell, direction)
+                    add = True
+                    if end:
+                        visited = False
+                        if temp_cell.visited:
+                            visited = True
+
+                        if visited:
+                            for j in range(len(explored_cells)):
+                                if explored_cells[j].row == temp_cell.row and explored_cells[j].col == temp_cell.col:
+                                    add = False
+                                    break
+                                else:
+                                    add = True
+
+                        else:
+                            add = False
+                        #if not temp_cell not in explored_cells:
+                        #    add = True
+                    else:
+                        visited = False
+                        if temp_cell.visited:
+                            visited = True
+
+                        explored = False
+
+                        if not visited:
+                            for k in range(len(explored_cells)):
+                                if explored_cells[k].row == temp_cell.row and explored_cells[k].col == temp_cell.col:
+                                    explored = True
+                                    break
+                                else:
+                                    explored = False
+
+                        if not explored and not visited:
+                            add = True
+                        else:
+                            add = False
+
+                       # if not temp_cell.visited:
+                       #     for k in range(len(explored_cells)):
+                       #         if explored_cells[k].row == temp_cell.row and explored_cells[k].col == temp_cell.col:
+                       #             add = False
+                       # else:
+                       #     add = False
+                       # if not temp_cell.visited and temp_cell not in explored_cells:
+                       #     add = True
+                    if add:
+                        temp_node = Node.Node(temp_cell)
+                        temp_node.parent = current_node
+                        temp_node.depth = temp_node.parent.depth + 1
+
+                        translator = Translation()
+                        direction = translator.change_direction_format(robot, helper.get_direction(
+                                temp_node.parent.cell, temp_node.cell), 'NSWE')
+
+                        if direction == 'A':  # om den går rakt fram, lågt värde. Annars spelar det ingen roll?
+                            temp_node.direction_value = 0
+
+                        else:
+                            temp_node.direction_value = 1
+
+                        pf.calc_h(maze, temp_node.cell)
+                        temp_node.fake_h = temp_node.cell.h + temp_node.depth
+                        temp_node.fake_f = temp_node.fake_h + temp_node.cell.g
+
+                        explored_cells.append(maze.matrix_robot[temp_node.cell.row][temp_node.cell.col])
+                        node_queue.add(temp_node)
+
+            if node_queue.empty():
+                break
+            current_node = node_queue.pop_queue(0)
+
+            if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
+                continue_search = False
+            elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
+                continue_search = False
+
+        fake_path.append(current_node.cell)
+        for i in range(current_node.depth):
+            current_node = current_node.parent
+            fake_path.append(current_node.cell)
+
+        print('Maze.count_fake: ' + str(maze.count_fake))
+        maze.count_fake = 0
+        return fake_path
+

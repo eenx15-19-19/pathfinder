@@ -8,35 +8,30 @@ import Node
 from PathBuilder import PathBuilder
 import queue as q
 import CustomList
+import time
 
 class PathFinder:
 
     # måste räkna medan den går, inte säkert att den tagit raka vägen
     def set_g(self, robot, cell):
-        row = cell.row
-        col = cell.col
         cell.g = robot.g   # tror detta stämmer? det stämmer inte
 
     def calc_g(self, parent_node: Node.Node, child_node: Node.Node):
-        parent_g = parent_node.cell.g
-        child_node.cell.g = parent_g + 1
+        child_node.cell.g = parent_node.cell.g + 1
 
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, cell):
-        row = cell.row
-        col = cell.col
-        cell.h = 0.1*(abs(maze.end_row - row) + abs(maze.end_col - col))
+        cell.h = 1*(abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
 
     def astar(self, maze, robot):   # Ska göras
+        t0 = time.time()
         helper = HelpFunctions()
 
         current_cell = helper.current_cell(robot, maze)
-
-        available_cells = []
 
         queue = q.Queue()
         end_nodes = CustomList.CustomList()
@@ -44,32 +39,19 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
+        if current_cell.row == 6 and current_cell.col == 2:
+            print('hej')
         end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
+       # print('end_nodes: ' + str(end_nodes))
         next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
 
+        t1 = time.time()
+        astar_time = t1 - t0
+        print('A*-time = ' + str(astar_time))
+
         return direction, next_node.cell
-
-       # target_cell = Cell.Cell(helper.split_walls('0000'), 0, 0)
-       # target_cell.f = sys.maxsize
-
-       # for cell in available_cells:
-
-        #    self.calc_f(cell)
-
-            # prioritera lägst f. Därefter prioritera icke visited om den tidigare valda cellen är visited.
-        #    if cell.f < target_cell.f:
-        #        target_cell = cell
-        #    elif cell.f == target_cell.f:
-        #        if not cell.visited and target_cell.visited:
-        #            target_cell = cell
-                # kan vi hamna i fallet då f är lika och h är lika samtidigt?
-
-       # direction = helper.get_direction(current_cell, target_cell)
-
-        #print('Direction: ' + str(direction))
-        #return direction, target_cell    # 'N/S/W/E'
 
     def right_hand_rule(self, maze, robot):
         row = robot.current_pos_row
@@ -127,15 +109,12 @@ class PathFinder:
 
         cell = maze.matrix[target_cell.row][target_cell.col]
         cell.visited = True
+        maze.matrix_robot[target_cell.row][target_cell.col] = cell
         robot.g = robot.g + 1
         self.set_g(robot, cell)
-
 
         maze.shortest_path.append(cell)
 
         return direction
-
-
-
 
 
