@@ -12,7 +12,8 @@ class Maze(object):
         # lösningen placerad i övre högre hörnet
         self.end_row = 7
         self.end_col = 8
-
+        self.explored_row = self.start_row
+        self.explored_col = self.start_col
         transformer = MazeTransformer()
         self._matrix = transformer.get_matrix()
         # inga väggar finns förrän roboten ser dem
@@ -49,6 +50,10 @@ class Maze(object):
         # lista för shortest path
         self.shortest_path = [self.matrix[self.start_row][self.start_col]]
         self.path = [self.matrix[self.start_row][self.start_col]]
+
+        self.count_fake = 0
+        self.count_unvisited = 0
+        self.count_pb = 0
     @property
     def matrix(self):
         return self._matrix
