@@ -62,15 +62,15 @@ class PathBuilder:
 
             goal = False
             outside_explored_area = False
-            #if (maze.matrix_robot[maze.end_row][maze.end_col] in fake_path or
-            #        maze.matrix[maze.end_row][maze.end_col] in fake_path):
-            #    goal = True
-            #if fake_path[0].row < maze.explored_row and fake_path[0].col > maze.explored_col:
-            #    outside_explored_area = True
+            if (maze.matrix_robot[maze.end_row][maze.end_col] in fake_path or
+                    maze.matrix[maze.end_row][maze.end_col] in fake_path):
+                goal = True
+            if fake_path[0].row < maze.explored_row and fake_path[0].col > maze.explored_col:
+                outside_explored_area = True
 
-            #if not goal and not outside_explored_area:
-            if maze.matrix_robot[maze.end_row][maze.end_col] not in fake_path and \
-                    maze.matrix[maze.end_row][maze.end_col] not in fake_path:
+            if not goal and not outside_explored_area:
+            #if maze.matrix_robot[maze.end_row][maze.end_col] not in fake_path and \
+             #       maze.matrix[maze.end_row][maze.end_col] not in fake_path:
                 print('Dead end!')
             else:
                 node.fake_h = node.cell.h + node.depth
@@ -156,24 +156,23 @@ class PathBuilder:
         node_queue = CustomList.CustomList()
         continue_search = True
 
-        #if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
-        #    continue_search = False
-        #elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
-        #    continue_search = False
+        if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
+            continue_search = False
+        elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
+            continue_search = False
 
-        #while continue_search:
         explored_cells.append(maze.matrix_robot[current_node.cell.row][current_node.cell.col])
 
         if node.cell.row == 15 and node.cell.col == 1:
-            print('1')
+             print('1')
 
-        while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
-            maze.count_fake = maze.count_fake + 1
+        while continue_search:
+
+        #while not current_node.cell.row == maze.end_row or not current_node.cell.col == maze.end_col:
+            #maze.count_fake = maze.count_fake + 1
 
             if maze.count_fake == 200:
                 print('So much fake')
-
-
 
             walls = current_node.cell.walls
             for i in range(len(walls)):
@@ -254,10 +253,10 @@ class PathBuilder:
                 break
             current_node = node_queue.pop_queue(0)
 
-           # if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
-           #     continue_search = False
-           # elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
-           #     continue_search = False
+            if current_node.cell.row == maze.end_row and current_node.cell.col == maze.end_col:
+                continue_search = False
+            elif current_node.cell.row < maze.explored_row and current_node.cell.col > maze.explored_col:
+                continue_search = False
 
         fake_path.append(current_node.cell)
         for i in range(current_node.depth):
