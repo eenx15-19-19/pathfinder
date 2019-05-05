@@ -10,6 +10,7 @@ import queue as q
 import CustomList
 import time
 
+
 class PathFinder:
 
     # måste räkna medan den går, inte säkert att den tagit raka vägen
@@ -22,12 +23,12 @@ class PathFinder:
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, cell):
-        cell.h = 10*(abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
+        cell.h = 1 * (abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
 
-    def astar(self, maze, robot):   # Ska göras
+    def astar(self, maze, robot):  # Ska göras
         t0 = time.time()
         helper = HelpFunctions()
 
@@ -39,10 +40,8 @@ class PathFinder:
         list_cells = []
 
         pb = PathBuilder()
-        if current_cell.row == 6 and current_cell.col == 2:
-            print('hej')
         end_nodes = pb.path_builder(maze, robot, current_node, queue, end_nodes, list_cells, False)
-       # print('end_nodes: ' + str(end_nodes))
+        # print('end_nodes: ' + str(end_nodes))
         next_node = pb.find_best(end_nodes)
 
         direction = helper.get_direction(current_cell, next_node.cell)
@@ -66,7 +65,7 @@ class PathFinder:
         helper = HelpFunctions()
         translator = Translation()
         print(str(current_cell.walls))
-        walls = translator.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE') # walls blir på ABLR
+        walls = translator.change_wall_format(current_cell.walls, robot.current_direction, 'NSWE')  # walls blir på ABLR
         print(str(walls))
 
         # välj håll att gå. Prio: Höger, Rätt fram, Vänster, Vänd
@@ -102,8 +101,8 @@ class PathFinder:
         direction, target_cell = self.astar(maze, robot)
 
         if target_cell.visited:
-            #i = maze.shortest_path.index(target_cell)
-            #del maze.shortest_path[i:len(maze.shortest_path)]
+            # i = maze.shortest_path.index(target_cell)
+            # del maze.shortest_path[i:len(maze.shortest_path)]
             robot.g = target_cell.g
             # hantera att cell är visited men inte med i listan
 
@@ -117,4 +116,46 @@ class PathFinder:
 
         return direction
 
+    def goal_start(self, maze, robot):
+        helper = HelpFunctions()
+        translator = Translation()
+        builder = PathBuilder()
+        test_queue = q.Queue()
+        end_nodes = CustomList.CustomList()
+        list_cells = []
+        end_cell: Cell.Cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
+        end_node = Node.Node(end_cell)
+        instruction_final = []
+        direction_final = [robot.current_direction]
 
+        end_nodes = builder.path_builder(maze, robot, end_node, test_queue, end_nodes, list_cells, True)
+
+        start_cell = maze.matrix[maze.start_row][maze.start_col]
+        goal_index = end_nodes.cell_search(start_cell)
+        goal = end_nodes.custom_list[goal_index]
+
+        path_list = builder.find_path(goal)
+        path_list.reverse()
+
+        for i in range(len(path_list) - 1):
+            current_cell = path_list[i]
+            next_cell = path_list[i + 1]
+            direction_final.append(helper.get_direction(current_cell, next_cell))
+            robot_direction = direction_final[i]
+            direction = direction_final[i + 1]
+            instruction_final.append(translator.change_direction_format(robot_direction, direction, 'NSWE'))
+
+        return instruction_final
+
+    def path_reverse(self, path):
+        new_path = []
+        for direction in path:
+            if direction == 'A':
+                new_path.append('B')
+            elif direction == 'B':
+                new_path.append('A')
+            elif direction == 'L':
+                new_path.append('R')
+            elif direction == 'R':
+                new_path.append('L')
+        return new_path
