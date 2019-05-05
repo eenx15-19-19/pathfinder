@@ -89,6 +89,10 @@ class PathBuilder:
                 # depth ska adderas såhär på g
 
         if queue.empty():
+           # print('Maze.count_unvisited: ' + str(maze.count_unvisited))
+            #maze.count_unvisited = 0
+           # print('Maze.count_pb: ' + str(maze.count_pb))
+            #maze.count_pb = 0
             return end_nodes
         else:
             next_node = queue.get()
@@ -116,6 +120,7 @@ class PathBuilder:
         return path_list
 
     def manhattan_list_gen(self, maze, end_node: Node.Node):
+        manhattan_list = []
         list_list1 = []
         list_list2 = []
         if end_node.cell.row - maze.end_row < 0:
@@ -136,6 +141,8 @@ class PathBuilder:
             list_list2.append(maze.matrix[end_node.cell.row][j])
             list_list1.append(maze.matrix[maze.end_row][j])
 
+        manhattan_list.append(list_list1)
+        manhattan_list.append(list_list2)
         return list_list1, list_list2
 
     def construct_fake_path(self, maze, robot, node, end):
@@ -165,8 +172,8 @@ class PathBuilder:
 
             #maze.count_fake = maze.count_fake + 1
 
-            if maze.count_fake == 200:
-                print('So much fake')
+            #if maze.count_fake == 200:
+            #    print('So much fake')
 
             walls = current_node.cell.walls
             for i in range(len(walls)):
@@ -259,6 +266,6 @@ class PathBuilder:
             fake_path.append(current_node.cell)
 
         #print('Maze.count_fake: ' + str(maze.count_fake))
-        maze.count_fake = 0
+        #maze.count_fake = 0
         return fake_path
 
