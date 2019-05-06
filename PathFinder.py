@@ -23,7 +23,7 @@ class PathFinder:
     # manhattan heuristic (första vektornorm)
     # hur får man denna att ta hänsyn till väggar?
     def calc_h(self, maze, cell):
-        cell.h = 1 * (abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
+        cell.h = 6 * (abs(maze.end_row - cell.row) + abs(maze.end_col - cell.col))
 
     def calc_f(self, cell):
         cell.f = cell.g + cell.h
