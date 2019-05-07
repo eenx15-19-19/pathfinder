@@ -10,7 +10,7 @@ import CustomList
 
 class PathBuilder:
 
-    def path_builder(self, maze, robot, node: Node, queue: q.Queue, end_nodes: CustomList.CustomList, list_cells, end):
+    def path_builder(self, maze, robot, node, queue, end_nodes, list_cells, end):
 
         helper = HelpFunctions()
         pf = PathFinder.PathFinder()
@@ -117,7 +117,7 @@ class PathBuilder:
 
         return path_list
 
-    def manhattan_list_gen(self, maze, end_node: Node.Node):
+    def manhattan_list_gen(self, maze, end_node):
         manhattan_list = []
         list_list1 = []
         list_list2 = []

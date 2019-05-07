@@ -18,7 +18,7 @@ class PathFinder:
     def set_g(self, robot, cell):
         cell.g = robot.g
 
-    def calc_g(self, parent_node: Node.Node, child_node: Node.Node):
+    def calc_g(self, parent_node, child_node):
         child_node.cell.g = parent_node.cell.g + 1
 
     # manhattan heuristic (första vektornorm)
@@ -124,7 +124,7 @@ class PathFinder:
         test_queue = q.Queue()
         end_nodes = CustomList.CustomList()
         list_cells = []
-        end_cell: Cell.Cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
+        end_cell = maze.matrix[robot.current_pos_row][robot.current_pos_col]
         end_node = Node.Node(end_cell)
         instruction_final = []
         direction_final = [robot.current_direction]
