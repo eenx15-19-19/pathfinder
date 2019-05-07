@@ -46,7 +46,7 @@ def main():
 def fas1(sLast, maze, robot):
     while not maze.win:
         cell=ser.read()
-        if cell == 'abort':
+        if cell == 'e':
             return None
         while sLast == cell[0]: #Check if package is replica of the one before.
             ser.write('wrong package')
@@ -61,7 +61,7 @@ def fas1(sLast, maze, robot):
 
         if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
             maze.win = True
-            ser.write('fas2')
+            ser.write('s')
             return 'fas2'
 
 def fas2(maze, robot):
@@ -78,8 +78,8 @@ def fas2(maze, robot):
 def fas3(maze, robot):
     finder = PathFinder()
 
-    temp_directions = finder.goal_start(maze, robot)  # Big packages with all instructions for solving the labyrinth
-    directions = finder.path_reverse(temp_directions)
+    #temp_directions = finder.goal_start(maze, robot)  # Big packages with all instructions for solving the labyrinth
+    directions = finder.path_to_instructions(robot, maze.shortest_path, 'start')
     directions = ''.join(directions)
 
     ser.write(directions)

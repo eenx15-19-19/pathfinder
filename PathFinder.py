@@ -135,7 +135,40 @@ class PathFinder:
         goal = end_nodes.custom_list[goal_index]
 
         path_list = builder.find_path(goal)
+       # print(path_list)
+
         path_list.reverse()
+       # print(path_list)
+        instruction_final = self.path_to_instructions(robot, path_list, 'goal')
+
+       # for i in range(len(path_list) - 1):
+       #     current_cell = path_list[i]
+       #     next_cell = path_list[i + 1]
+       #     direction_final.append(helper.get_direction(current_cell, next_cell))
+       #     robot_direction = direction_final[i]
+       #     direction = direction_final[i + 1]
+       #     direction = translator.change_direction_format(robot_direction, direction, 'NSWE')
+       #     instruction_final.append(translator.change_instruction_format(direction))
+        print(path_list)
+        print('Goal to start: ')
+        print(instruction_final)
+
+        path_list.reverse()
+        maze.shortest_path = path_list
+        return instruction_final
+
+    def path_to_instructions(self,robot, path_list, start_point):
+        helper = HelpFunctions()
+        translator = Translation()
+        builder = PathBuilder()
+
+        instruction_final = []
+
+        direction_final = []
+        if start_point == 'start':
+            direction_final = ['N']
+        elif start_point == 'goal':
+            direction_final = [robot.current_direction]
 
         for i in range(len(path_list) - 1):
             current_cell = path_list[i]
@@ -146,7 +179,6 @@ class PathFinder:
             direction = translator.change_direction_format(robot_direction, direction, 'NSWE')
             instruction_final.append(translator.change_instruction_format(direction))
 
-        print(instruction_final)
         return instruction_final
 
     def path_reverse(self, path):

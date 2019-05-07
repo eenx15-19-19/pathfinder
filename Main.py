@@ -128,11 +128,13 @@ class Main:
 
 
         # Fas 2
-        instructions_2 = finder.path_reverse(instructions)
+
+        instructions_2 = finder.path_to_instructions(robot, maze.shortest_path, 'start')
+        print(maze.shortest_path)
+        #instructions_2 = finder.path_reverse(instructions)
         # Send instructions_2 to robot
         # ...
-
-        #print(path_list)
+        print(instructions_2)
         #print(instructions_2)
         print('Kortaste vägen med pb är: ' + str(len(instructions)) + ' antal steg.')
 
