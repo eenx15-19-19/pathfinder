@@ -88,3 +88,4 @@ def fas3(maze, robot):
     return None
 
 
+main()
