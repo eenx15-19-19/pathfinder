@@ -52,6 +52,7 @@ def main():
 
 def fas1(sLast, maze, robot):
     while not maze.win:
+
         print("--------------------- NEW CELL -------------------------")
         cell = ser.readline()
         print("Cell before: " + str(cell))
@@ -87,8 +88,8 @@ def fas1(sLast, maze, robot):
                 #print("Sending command before: " + direction)
                 direction = direction.encode('utf-8')
                 #print("Sending command after: " + str(direction))
-                print(type(direction))
-                time.sleep(5)
+                #print(type(direction))
+                #time.sleep(5)
                 ser.write(direction)
 
                 if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
