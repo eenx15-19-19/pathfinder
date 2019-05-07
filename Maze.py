@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import Cell
-from MazeTransformer import MazeTransformer
 from HelpFunctions import HelpFunctions
 
 class Maze(object):
@@ -11,15 +10,15 @@ class Maze(object):
         self.start_col = 0
         self.start_row = rows - 1
         # lösningen placerad i övre högre hörnet
-        self.end_row = 7 #0
-        self.end_col = 8 #6
+        self.end_row = 0
+        self.end_col = 6
         self.explored_row = self.start_row
         self.explored_col = self.start_col
         self.win = False
-        transformer = MazeTransformer()
-        self._matrix = transformer.get_matrix()
+
+
         # inga väggar finns förrän roboten ser dem
-       # self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
+        self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
         for i in range(self.rows):
             for j in range(self.cols):
                 self._matrix[i][j] = Cell.Cell(self._matrix[i][j], i, j)
