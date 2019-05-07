@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Cell(object):
     # walls är lista av strängar t.ex. ['0', '0', '0', '1'], NSWE
     # g = avstånd från start, h = avstånd till mål

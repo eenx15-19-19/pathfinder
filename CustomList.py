@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CustomList(object):
 
     def __init__(self):

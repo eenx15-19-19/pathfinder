@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import Cell
 from MazeTransformer import MazeTransformer
 from HelpFunctions import HelpFunctions
@@ -10,8 +11,8 @@ class Maze(object):
         self.start_col = 0
         self.start_row = rows - 1
         # lösningen placerad i övre högre hörnet
-        self.end_row = 0
-        self.end_col = 6
+        self.end_row = 6
+        self.end_col = 0
         self.explored_row = self.start_row
         self.explored_col = self.start_col
         self.win = False

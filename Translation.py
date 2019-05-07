@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Translation:
     # walls är sträng med 1:or och 0:or, current_direction är robotens riktning, finns i Robot
     # current_type är antingen 'ABLR' eller 'NSWE'

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import Cell
 from HelpFunctions import HelpFunctions
 import Node

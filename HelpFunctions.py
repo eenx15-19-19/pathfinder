@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class HelpFunctions:
 
     def current_cell(self, robot, maze):

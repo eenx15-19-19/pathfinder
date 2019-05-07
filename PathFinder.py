@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Här kan vi lägga algoritmen och saker relaterade till den
 import Maze
 import Cell

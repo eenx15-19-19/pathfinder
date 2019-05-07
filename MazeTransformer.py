@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Translation import Translation
 import pprint
 
