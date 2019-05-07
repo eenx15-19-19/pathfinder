@@ -5,6 +5,7 @@ from PathFinder import PathFinder
 import Maze
 from Main import Main
 import io
+import time
 ser = serial.Serial(
     port='/dev/ttyS0',
     baudrate=115200,
@@ -81,10 +82,13 @@ def fas1(sLast, maze, robot):
                 print('Current cell is: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
                 main_class = Main()
                 direction = main_class.run(maze, robot, cell)
+
+                print('Target cell: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
                 #print("Sending command before: " + direction)
                 direction = direction.encode('utf-8')
                 #print("Sending command after: " + str(direction))
                 print(type(direction))
+                time.sleep(5)
                 ser.write(direction)
 
                 if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
