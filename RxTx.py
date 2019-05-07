@@ -5,6 +5,7 @@ ser = serial.Serial(
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
+    timeout=0.1
 
 )
 import Robot
@@ -17,17 +18,17 @@ def main():
 
     run_instruction = None
 
-    maze = Maze.Maze(16, 16)
+    maze = Maze.Maze(13, 6)
     robot = Robot.Robot(maze)
 
     while run_instruction.equals(None):
-        run_instruction = ser.read()
+        run_instruction = ser.read(4)
 
         if run_instruction=='fas1':
             sLast=1
 
             # Initiera maze och robot
-            maze = Maze.Maze(16, 16)
+            maze = Maze.Maze(13, 6)
             for i in range(maze.rows):
                 for j in range(maze.cols):
                     finder.calc_h(maze, maze.matrix[i][j])
@@ -45,12 +46,12 @@ def main():
 
 def fas1(sLast, maze, robot):
     while not maze.win:
-        cell=ser.read()
+        cell=ser.read(5)
         if cell == 'e':
             return None
         while sLast == cell[0]: #Check if package is replica of the one before.
             ser.write('wrong package')
-            cell=ser.read()
+            cell=ser.read(5)
         sLast = cell[0]
         cell = cell[1:]   #remove the sequence number
 

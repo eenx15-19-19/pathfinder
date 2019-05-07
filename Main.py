@@ -115,12 +115,14 @@ class Main:
 
             if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                 win = True
-
+        t0 = time.time()
         # Letar väg från aktuell position till start
         instructions = finder.goal_start(maze, robot)
         # Send instructions to robot
         # ...
-
+        t1 = time.time()
+        calc_time = t1-t0
+        print('calc_time' + str(calc_time))
 
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         # Innan fas 2 måste roboten vända 180 grader för att vara redo för 'A'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -128,8 +130,11 @@ class Main:
 
 
         # Fas 2
-
+        t0 = time.time()
         instructions_2 = finder.path_to_instructions(robot, maze.shortest_path, 'start')
+        t1 = time.time()
+        inst_time = t1 - t0
+        print('inst_time: ' + str(inst_time))
         print(maze.shortest_path)
         #instructions_2 = finder.path_reverse(instructions)
         # Send instructions_2 to robot
