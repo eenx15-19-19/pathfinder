@@ -52,16 +52,16 @@ class Maze(object):
 
         for i in range(5):
             self._matrix_robot[0][i].walls = helper.split_walls('1000')
-            self._matrix_robot[13][i].walls = helper.split_walls('0100')
+            self._matrix_robot[12][i].walls = helper.split_walls('0100')
 
         for i in range(12):
             self._matrix_robot[i][0].walls = helper.split_walls('0010')
-            self._matrix_robot[i][6].walls = helper.split_walls('0001')
+            self._matrix_robot[i][5].walls = helper.split_walls('0001')
 
         self._matrix_robot[0][0].walls = helper.split_walls('1010')
-        self._matrix_robot[0][6].walls = helper.split_walls('1001')
-        self._matrix_robot[13][0].walls = helper.split_walls('0111')
-        self._matrix_robot[13][6].walls = helper.split_walls('0101')
+        self._matrix_robot[0][5].walls = helper.split_walls('1001')
+        self._matrix_robot[12][0].walls = helper.split_walls('0111')
+        self._matrix_robot[12][5].walls = helper.split_walls('0101')
 
 
         # lista för shortest path
