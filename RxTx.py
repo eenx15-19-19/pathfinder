@@ -81,7 +81,7 @@ def fas3(maze, robot):
     directions = finder.path_to_instructions(robot, maze.shortest_path, 'start')
     directions = ''.join(directions)
 
-    ser.write(directions
+    ser.write(directions)
 
     return None
 
