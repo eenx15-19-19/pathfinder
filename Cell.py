@@ -15,7 +15,9 @@ class Cell(object):
         self._h = 0
         self._f = self._g + self._h
 
+
     def __str__(self):
+        print(type(self.walls))
         string = '[' + str(self.row) + '][' + str(self.col) + '] Walls: ' + ''.join(self.walls)
         return string
 

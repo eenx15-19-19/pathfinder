@@ -21,7 +21,7 @@ class Maze(object):
         self._matrix = [[Cell.Cell('0000', i, j) for j in range(self.cols)] for i in range(self.rows)]
         for i in range(self.rows):
             for j in range(self.cols):
-                self._matrix[i][j] = Cell.Cell(self._matrix[i][j], i, j)
+                self._matrix[i][j] = Cell.Cell('0000', i, j)
 
         self.shortest_path = []
         # startnoden är besökt
@@ -37,6 +37,17 @@ class Maze(object):
         self._matrix_robot[self.start_row][self.start_col] = self.matrix[self.start_row][self.start_col]
 
         # Tom labyrint, men med ytterväggar
+        for i in range(15):
+            self._matrix[i][0].walls = helper.split_walls('0010')
+            self._matrix[i][15].walls = helper.split_walls('0001')
+            self._matrix[0][i].walls = helper.split_walls('1000')
+            self._matrix[15][i].walls = helper.split_walls('0100')
+
+        self._matrix[0][0].walls = helper.split_walls('1010')
+        self._matrix[0][15].walls = helper.split_walls('1001')
+        self._matrix[15][0].walls = helper.split_walls('0111')
+        self._matrix[15][15].walls = helper.split_walls('0101')
+
         for i in range(15):
             self._matrix_robot[i][0].walls = helper.split_walls('0010')
             self._matrix_robot[i][15].walls = helper.split_walls('0001')
