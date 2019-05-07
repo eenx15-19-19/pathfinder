@@ -37,7 +37,7 @@ class Main:
             # sensor_data = skickametod(instruction)
 
             # Kontrollera om vi är framme
-            if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
+            if (robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col):
                 win = True
 
         # Letar väg från aktuell position till start
@@ -190,6 +190,9 @@ class Main:
         helper.update_current_cell(maze, robot)
 
         instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
+
+        instruction = translator.change_instruction_format(instruction)
+
         return instruction # Returnera instruktion
 
 

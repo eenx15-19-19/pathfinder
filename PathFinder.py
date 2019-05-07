@@ -143,19 +143,21 @@ class PathFinder:
             direction_final.append(helper.get_direction(current_cell, next_cell))
             robot_direction = direction_final[i]
             direction = direction_final[i + 1]
-            instruction_final.append(translator.change_direction_format(robot_direction, direction, 'NSWE'))
+            direction = translator.change_direction_format(robot_direction, direction, 'NSWE')
+            instruction_final.append(translator.change_instruction_format(direction))
 
+        print(instruction_final)
         return instruction_final
 
     def path_reverse(self, path):
         new_path = []
         for direction in path:
-            if direction == 'A':
-                new_path.append('B')
-            elif direction == 'B':
-                new_path.append('A')
-            elif direction == 'L':
-                new_path.append('R')
-            elif direction == 'R':
-                new_path.append('L')
+            if direction == 'f':
+                new_path.append('bf')
+            elif direction == 'bf':
+                new_path.append('f')
+            elif direction == 'lf':
+                new_path.append('rf')
+            elif direction == 'rf':
+                new_path.append('lf')
         return new_path

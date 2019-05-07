@@ -189,3 +189,17 @@ class Translation:
         new_walls[3] = walls[2]
 
         return new_walls
+
+    def change_instruction_format(self, instruction):
+
+        new_instruction = instruction
+        if instruction == 'A':
+            new_instruction = 'f'
+        elif instruction == 'B':
+            new_instruction = 'bf'
+        elif instruction == 'L':
+            new_instruction = 'lf'
+        elif instruction == 'R':
+            new_instruction = 'rf'
+
+        return new_instruction

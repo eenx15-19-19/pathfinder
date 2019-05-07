@@ -14,6 +14,7 @@ class Maze(object):
         self.end_col = 8
         self.explored_row = self.start_row
         self.explored_col = self.start_col
+        self.win = False
         transformer = MazeTransformer()
         self._matrix = transformer.get_matrix()
         # inga väggar finns förrän roboten ser dem
