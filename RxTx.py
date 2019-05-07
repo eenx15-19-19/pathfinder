@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 import serial
+import Robot
+from PathFinder import PathFinder
+import Maze
+from Main import Main
 import io
 ser = serial.Serial(
     port='/dev/ttyS0',
@@ -10,10 +14,6 @@ ser = serial.Serial(
     timeout=3.0
 
 )
-import Robot
-from PathFinder import PathFinder
-import Maze
-from Main import Main
 
 def main():
     print("Running Main!")
@@ -75,14 +75,15 @@ def fas1(sLast, maze, robot):
                     ok = False
                     break
             if(ok):
-                print("Cell type:")
-                print(type(cell))
+                #print("Cell type:")
+                #print(type(cell))
                 print("Cell updated :" + cell)
+                print('Current cell is: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
                 main_class = Main()
                 direction = main_class.run(maze, robot, cell)
-                print("Sending command before: " + direction)
+                #print("Sending command before: " + direction)
                 direction = direction.encode('utf-8')
-                print("Sending command after: " + str(direction))
+                #print("Sending command after: " + str(direction))
                 print(type(direction))
                 ser.write(direction)
 

@@ -23,7 +23,7 @@ class Main:
         builder = PathBuilder.PathBuilder()
         helper = HelpFunctions()
         # Initiera maze och robot
-        maze = Maze.Maze(16, 16)
+        maze = Maze.Maze(13, 6)
         for i in range(maze.rows):
             for j in range(maze.cols):
                 finder.calc_h(maze, maze.matrix[i][j])
@@ -60,14 +60,14 @@ class Main:
         finder = PathFinder()
         # Initiera maze och robot
 
-        maze = Maze.Maze(16, 16)
+        maze = Maze.Maze(13, 6)
         for i in range(maze.rows):
             for j in range(maze.cols):
                 finder.calc_h(maze, maze.matrix[i][j])
 
         robot = Robot.Robot(maze)
 
-        print(maze.matrix[maze.end_row][maze.end_col])
+        #print(maze.matrix[maze.end_row][maze.end_col])
                                         # Endast för simulering början
 
         # 3x2
@@ -174,13 +174,14 @@ class Main:
 
         maze.path.append(helper.current_cell(robot, maze))
 
-        print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' )
+        print('Current cell: ' + '[' + str(robot.current_pos_row) + '][' + str(robot.current_pos_col) + ']' + ' Walls: '
+              + str(maze.matrix[robot.current_pos_row][robot.current_pos_col].walls))
         instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
 
         return instruction  # Returnera instruktion
 
     def run(self, maze, robot, sensor_data):    # Vill ha data från sensorer
-
+        print('----- RUN: --- walls: ' + sensor_data)
         finder = PathFinder()
         translator = Translation()
         helper = HelpFunctions()
@@ -191,19 +192,30 @@ class Main:
         maze.matrix[robot.current_pos_row][robot.current_pos_col].walls =\
             translator.change_wall_format(current_walls, robot.current_direction, 'ABLR')
 
+
         maze.matrix_robot[robot.current_pos_row][robot.current_pos_col].walls =\
             translator.change_wall_format(current_walls, robot.current_direction, 'ABLR')
+        #print('Regular matrix: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
+        #print('Robot matrix: ' + str(maze.matrix_robot[robot.current_pos_row][robot.current_pos_col]))
 
         direction = finder.run_pathfinder(maze, robot)      # NSWE
 
         # Uppdatera robot
+
+
+        print('Robot direction: ' + robot.current_direction)
+        instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
+
+        #print('Instruction old format: ' + instruction)
+        instruction = translator.change_instruction_format(instruction)
+
+        print('Instruction new format: ' + instruction)
+
         robot.current_direction = direction
         helper.update_current_cell(maze, robot)
 
-        instruction = translator.change_direction_format(robot.current_direction, direction, 'NSWE')
 
-        instruction = translator.change_instruction_format(instruction)
-
+        #print('Instruction: ' + instruction)
         return instruction # Returnera instruktion
 
 

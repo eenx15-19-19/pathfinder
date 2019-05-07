@@ -114,7 +114,10 @@ class PathFinder:
         self.set_g(robot, cell)
 
         maze.shortest_path.append(cell)
+        #print('Current cell is: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
+        #print('Current robot cell is: ' + str(maze.matrix_robot[robot.current_pos_row][robot.current_pos_col]))
 
+        #print('Direction: ' + direction)
         return direction
 
     def goal_start(self, maze, robot):
