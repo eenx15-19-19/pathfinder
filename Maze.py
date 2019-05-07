@@ -37,27 +37,32 @@ class Maze(object):
         self._matrix_robot[self.start_row][self.start_col] = self.matrix[self.start_row][self.start_col]
 
         # Tom labyrint, men med ytterväggar
-        for i in range(15):
-            self._matrix[i][0].walls = helper.split_walls('0010')
-            self._matrix[i][15].walls = helper.split_walls('0001')
+        for i in range(5):
             self._matrix[0][i].walls = helper.split_walls('1000')
-            self._matrix[15][i].walls = helper.split_walls('0100')
+            self._matrix[13][i].walls = helper.split_walls('0100')
+
+        for i in range(12):
+            self._matrix[i][0].walls = helper.split_walls('0010')
+            self._matrix[i][6].walls = helper.split_walls('0001')
 
         self._matrix[0][0].walls = helper.split_walls('1010')
-        self._matrix[0][15].walls = helper.split_walls('1001')
-        self._matrix[15][0].walls = helper.split_walls('0111')
-        self._matrix[15][15].walls = helper.split_walls('0101')
+        self._matrix[0][6].walls = helper.split_walls('1001')
+        self._matrix[13][0].walls = helper.split_walls('0111')
+        self._matrix[13][6].walls = helper.split_walls('0101')
 
-        for i in range(15):
-            self._matrix_robot[i][0].walls = helper.split_walls('0010')
-            self._matrix_robot[i][15].walls = helper.split_walls('0001')
+        for i in range(5):
             self._matrix_robot[0][i].walls = helper.split_walls('1000')
-            self._matrix_robot[15][i].walls = helper.split_walls('0100')
+            self._matrix_robot[13][i].walls = helper.split_walls('0100')
+
+        for i in range(12):
+            self._matrix_robot[i][0].walls = helper.split_walls('0010')
+            self._matrix_robot[i][6].walls = helper.split_walls('0001')
 
         self._matrix_robot[0][0].walls = helper.split_walls('1010')
-        self._matrix_robot[0][15].walls = helper.split_walls('1001')
-        self._matrix_robot[15][0].walls = helper.split_walls('0111')
-        self._matrix_robot[15][15].walls = helper.split_walls('0101')
+        self._matrix_robot[0][6].walls = helper.split_walls('1001')
+        self._matrix_robot[13][0].walls = helper.split_walls('0111')
+        self._matrix_robot[13][6].walls = helper.split_walls('0101')
+
 
         # lista för shortest path
         self.shortest_path = [self.matrix[self.start_row][self.start_col]]
