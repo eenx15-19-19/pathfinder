@@ -186,7 +186,7 @@ class Main:
         helper = HelpFunctions()
 
         # Från robot: få information om väggar
-        current_walls = sensor_data
+        current_walls = helper.split_walls(sensor_data)
         # Uppdatera cell.wall i maze
         maze.matrix[robot.current_pos_row][robot.current_pos_col].walls =\
             translator.change_wall_format(current_walls, robot.current_direction, 'ABLR')

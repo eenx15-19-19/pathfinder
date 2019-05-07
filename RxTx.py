@@ -7,7 +7,7 @@ ser = serial.Serial(
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
-    timeout=0.5
+    timeout=3.0
 
 )
 import Robot
@@ -51,28 +51,45 @@ def main():
 
 def fas1(sLast, maze, robot):
     while not maze.win:
-        cell=ser.readline()
-        print("Cell: " + str(cell))
-        if cell == b'e':
-            print(" ------------    ERROR fas1() -----------")
+        print("--------------------- NEW CELL -------------------------")
+        cell = ser.readline()
+        print("Cell before: " + str(cell))
+        cell = cell.decode("utf-8")
+
+
+       # if cell == b'e':
+        #    print(" ------------    ERROR fas1() -----------")
             # return None
         #while sLast == b+cell[0]:#Check if package is replica of the one before.
          #   print("wrong package")
           #  cell=ser.readline()
-        #sLast = cell[0]
-        cell = cell[1:]   #remove the sequence number
-        print(" ------------------ CELL IS OF TYPE ------------")
-        print(type(cell))
-        print(type(str(cell)))
-        main_class = Main()
-        direction = main_class.run(maze, robot, cell)
-        print("Sending command: " + direction)
-        ser.write(direction)
+       # sLast = cell[0]
+        cell = cell[1:-1]   #remove the sequence numberi
+        print("Cell 4 bytes: " + cell)
+        if(len(cell) == 4):
+            print("Length is 4")
+            ok = True
+            for character in cell:
+                print("Character: " + character)
+                if(character != '0' and character != '1'):
+                    ok = False
+                    break
+            if(ok):
+                print("Cell type:")
+                print(type(cell))
+                print("Cell updated :" + cell)
+                main_class = Main()
+                direction = main_class.run(maze, robot, cell)
+                print("Sending command before: " + direction)
+                direction = direction.encode('utf-8')
+                print("Sending command after: " + str(direction))
+                print(type(direction))
+                ser.write(direction)
 
-        if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
-            maze.win = True
-            ser.write('s')
-            return 'fas2'
+                if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
+                    maze.win = True
+                    ser.write('s')
+                    return 'fas2'
 
 def fas2(maze, robot):
     finder = PathFinder()
