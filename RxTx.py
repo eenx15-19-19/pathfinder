@@ -68,15 +68,15 @@ def fas1(sLast, maze, robot):
        # sLast = cell[0]
         cell = cell[1:-1]   #remove the sequence numberi
         print("Cell 4 bytes: " + cell)
-        if(len(cell) == 4):
+        if len(cell) == 4:
             print("Length is 4")
             ok = True
             for character in cell:
                 print("Character: " + character)
-                if(character != '0' and character != '1'):
+                if character != '0' and character != '1':
                     ok = False
                     break
-            if(ok):
+            if ok:
                 #print("Cell type:")
                 #print(type(cell))
                 print("Cell updated :" + cell)
@@ -95,6 +95,8 @@ def fas1(sLast, maze, robot):
 
                 if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                     maze.win = True
+                    ser.readline()  # kan orsaka fel, kanske behöver kolla vad den läst
+
                     ser.write(b's\n')
 
                     return 'fas2'
@@ -104,7 +106,8 @@ def fas2(maze, robot):
 
     directions = finder.goal_start(maze, robot) #Big packages with all instructions for solving the labyrinth
     directions = ''.join(directions)
-    time.sleep(1) # testing....
+    time.sleep(1)   # sleep pga båda byter till fas2 samtidigt, bra att vänta
+
     ser.write(directions.encode("utf-8"))
     ser.write(b'\n')
 

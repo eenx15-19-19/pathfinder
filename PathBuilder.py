@@ -24,7 +24,6 @@ class PathBuilder:
                 wall = walls[i]
 
                 if wall == '0':
-                    print()
                     direction = NSWE[i]
                     temp_cell = helper.get_adjacent_cell(maze, node.cell, direction)
                     available_cells.append(temp_cell)
