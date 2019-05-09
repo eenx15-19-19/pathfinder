@@ -188,10 +188,10 @@ class PathFinder:
     def path_reverse(self, path):
         new_path = []
         for direction in path:
-            if direction == 'f-':
+            if direction == 'f':
                 new_path.append('bf')
             elif direction == 'bf':
-                new_path.append('f-')
+                new_path.append('f')
             elif direction == 'lf':
                 new_path.append('rf')
             elif direction == 'rf':

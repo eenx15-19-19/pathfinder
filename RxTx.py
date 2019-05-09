@@ -91,15 +91,12 @@ def fas1(sLast, maze, robot):
                 #print(type(direction))
                 #time.sleep(5)
                 ser.write(direction)
+                ser.write(b'\n')
 
                 if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                     maze.win = True
-                    ser.write(b's')
-                    time.sleep(1)
-                    ser.write(b's')
-                    ser.write(b's')
-                    time.sleep(1)
-                    ser.write(b's')
+                    ser.write(b's\n')
+
                     return 'fas2'
 
 def fas2(maze, robot):
@@ -109,6 +106,7 @@ def fas2(maze, robot):
     directions = ''.join(directions)
     time.sleep(1) # testing....
     ser.write(directions.encode("utf-8"))
+    ser.write(b'\n')
 
     return None
 
@@ -120,6 +118,7 @@ def fas3(maze, robot):
     directions = ''.join(directions)
 
     ser.write(directions.encode("utf-8"))
+    ser.write(b'\n')
 
     return None
 

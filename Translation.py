@@ -195,7 +195,7 @@ class Translation:
 
         new_instruction = instruction
         if instruction == 'A':
-            new_instruction = 'f-'
+            new_instruction = 'f'
         elif instruction == 'B':
             new_instruction = 'bf'
         elif instruction == 'L':

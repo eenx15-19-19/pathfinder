@@ -235,5 +235,5 @@ class Main:
         return instruction # Returnera instruktion
 
 
-main = Main()
-main.sim_pi()
+#main = Main()
+#main.sim_pi()
