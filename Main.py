@@ -220,8 +220,8 @@ class Main:
 
         maze.matrix_robot[robot.current_pos_row][robot.current_pos_col].walls =\
             translator.change_wall_format(current_walls, robot.current_direction, 'ABLR')
-        #print('Regular matrix: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
-        #print('Robot matrix: ' + str(maze.matrix_robot[robot.current_pos_row][robot.current_pos_col]))
+        print('Regular matrix: ' + str(maze.matrix[robot.current_pos_row][robot.current_pos_col]))
+        print('Robot matrix: ' + str(maze.matrix_robot[robot.current_pos_row][robot.current_pos_col]))
 
         direction = finder.run_pathfinder(maze, robot)      # NSWE
 

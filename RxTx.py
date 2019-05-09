@@ -90,6 +90,7 @@ def fas1(sLast, maze, robot):
                 #print("Sending command after: " + str(direction))
                 #print(type(direction))
                 #time.sleep(5)
+                time.sleep(1) #Just for easier debugging
                 ser.write(direction)
                 ser.write(b'\n')
 
@@ -118,6 +119,7 @@ def fas3(maze, robot):
 
     #temp_directions = finder.goal_start(maze, robot)  # Big packages with all instructions for solving the labyrinth
     directions = finder.path_to_instructions(robot, maze.shortest_path, 'start')
+    print(direction)
     directions = ''.join(directions)
 
     ser.write(directions.encode("utf-8"))
