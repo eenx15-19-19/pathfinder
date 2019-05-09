@@ -92,22 +92,7 @@ class Main:
         #maze.matrix[2][2].walls = helper.split_walls('0111')
         #maze.matrix[2][3].walls = helper.split_walls('0111')
 
-        maze.matrix[11][0].walls = helper.split_walls('1010')
-        maze.matrix[11][1].walls = helper.split_walls('1100')
-        maze.matrix[11][2].walls = helper.split_walls('0101')
-        maze.matrix[10][2].walls = helper.split_walls('0011')
-        maze.matrix[9][2].walls = helper.split_walls('0011')
-        maze.matrix[8][2].walls = helper.split_walls('0011')
-        maze.matrix[7][2].walls = helper.split_walls('0011')
-        maze.matrix[6][2].walls = helper.split_walls('0001')
-        maze.matrix[5][2].walls = helper.split_walls('0011')
-        maze.matrix[4][2].walls = helper.split_walls('0011')
-        maze.matrix[3][2].walls = helper.split_walls('0011')
-        maze.matrix[2][2].walls = helper.split_walls('0011')
-        maze.matrix[1][2].walls = helper.split_walls('0011')
-        maze.matrix[0][2].walls = helper.split_walls('1001')
-        maze.matrix[0][1].walls = helper.split_walls('1100')
-        maze.matrix[0][0].walls = helper.split_walls('1010')
+
       #  for i in range(len(maze.matrix)):
       #      print(*maze.matrix[i])
                                         # Endast för simulering slut
