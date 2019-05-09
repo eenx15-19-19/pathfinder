@@ -12,7 +12,7 @@ ser = serial.Serial(
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
-    timeout=3.0
+    timeout=10.0
 
 )
 
@@ -44,7 +44,7 @@ def main():
 
             if run_instruction == 'fas2':
                 run_instruction = fas2(maze, robot)
-        elif run_instruction == 'fas3':
+        elif run_instruction == b'fas3\n':
             run_instruction = fas3(maze, robot)
         else:
             run_instruction = None
@@ -94,7 +94,12 @@ def fas1(sLast, maze, robot):
 
                 if robot.current_pos_row == maze.end_row and robot.current_pos_col == maze.end_col:
                     maze.win = True
-                    ser.write('s')
+                    ser.write(b's')
+                    time.sleep(1)
+                    ser.write(b's')
+                    ser.write(b's')
+                    time.sleep(1)
+                    ser.write(b's')
                     return 'fas2'
 
 def fas2(maze, robot):
@@ -102,8 +107,8 @@ def fas2(maze, robot):
 
     directions = finder.goal_start(maze, robot) #Big packages with all instructions for solving the labyrinth
     directions = ''.join(directions)
-
-    ser.write(directions)
+    time.sleep(1) # testing....
+    ser.write(directions.encode("utf-8"))
 
     return None
 
@@ -114,7 +119,7 @@ def fas3(maze, robot):
     directions = finder.path_to_instructions(robot, maze.shortest_path, 'start')
     directions = ''.join(directions)
 
-    ser.write(directions)
+    ser.write(directions.encode("utf-8"))
 
     return None
 
