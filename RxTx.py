@@ -119,7 +119,7 @@ def fas3(maze, robot):
 
     #temp_directions = finder.goal_start(maze, robot)  # Big packages with all instructions for solving the labyrinth
     directions = finder.path_to_instructions(robot, maze.shortest_path, 'start')
-    print(direction)
+    print(directions)
     directions = ''.join(directions)
 
     ser.write(directions.encode("utf-8"))
